@@ -43,7 +43,7 @@ EXPOSE 8080
 # --from=build: tomar archivo de la etapa "build" anterior
 # Solo se copia el JAR, NO el código fuente ni herramientas de compilación
 # Esto mantiene la imagen final pequeña y segura
-COPY --from=build ./build/libs/Mutantes-1.0-SNAPSHOT.jar ./app.jar
+COPY --from=build ./build/libs/DetectorDeMutantes-0.0.1-SNAPSHOT.jar ./app.jar
 
 # Comando que se ejecuta cuando el contenedor inicia
 # ENTRYPOINT (no CMD) asegura que siempre se ejecute la aplicación
