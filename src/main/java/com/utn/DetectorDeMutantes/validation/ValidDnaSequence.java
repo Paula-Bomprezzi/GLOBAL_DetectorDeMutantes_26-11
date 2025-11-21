@@ -12,5 +12,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidDnaSequence {
+    String message() default "Invalid DNA sequence";
+    Class<?>[] groups() default {};
+    Class<? extends jakarta.validation.Payload>[] payload() default {};
 }
 

@@ -11,69 +11,53 @@
 
 ### MutantServiceTest
 **Prioridad: MEDIA** - Verificar lógica de negocio  
-**Estado:** Clase vacía  
+**Estado:** ✅ **COMPLETO - 5/5 tests implementado**  
 **Ubicación:** `src/test/java/com/utn/DetectorDeMutantes/service/MutantServiceTest.java`
 
-**Implementar tests para (RÚBRICAS 3.2):**
-- ⚠️ DNA nuevo (debe calcular hash, analizar, guardar)
-- ⚠️ DNA existente (debe retornar cacheado)
-- ⚠️ Manejo de excepciones (`DnaHashCalculationException`)
-- ⚠️ Verificar que se guarda en BD con `createdAt`
-- ⚠️ Verificar que el hash se calcula correctamente
-- ⚠️ Usar `@Mock` para `DnaRecordRepository` y `MutantDetector`
+**✅ COMPLETADO según RÚBRICAS 3.2:**
+- ✅ DNA nuevo (debe calcular hash, analizar, guardar)
+- ✅ DNA existente (debe retornar cacheado)
+- ✅ Manejo de excepciones
+- ✅ Verificar que se guarda en BD con `createdAt`
+- ✅ Verificar que el hash se calcula correctamente
+- ✅ Usa `@Mock` para `DnaRecordRepository` y `MutantDetector`
 
 ### StatsServiceTest
 **Prioridad: MEDIA** - Verificar estadísticas  
-**Estado:** Clase vacía  
+**Estado:** ✅ **COMPLETO - 6/6 tests implementado**  
 **Ubicación:** `src/test/java/com/utn/DetectorDeMutantes/service/StatsServiceTest.java`
 
-**Implementar tests para (RÚBRICAS 3.2):**
-- ⚠️ Ratio normal (mutantes/humanos)
-- ⚠️ Sin humanos (caso especial)
-- ⚠️ Sin mutantes
-- ⚠️ Sin registros
-- ⚠️ Verificar cálculo correcto del ratio
-- ⚠️ Usar `@Mock` para `DnaRecordRepository`
+**✅ COMPLETADO según RÚBRICAS 3.2:**
+- ✅ Ratio normal (mutantes/humanos)
+- ✅ Sin humanos (caso especial)
+- ✅ Sin mutantes
+- ✅ Sin registros
+- ✅ Verificar cálculo correcto del ratio
+- ✅ Usa `@Mock` para `DnaRecordRepository`
 
 ### MutantControllerTest
 **Prioridad: MEDIA** - Verificar endpoints  
-**Estado:** Clase vacía  
+**Estado:** ✅ **COMPLETO - 8/8 tests implementado**  
 **Ubicación:** `src/test/java/com/utn/DetectorDeMutantes/controller/MutantControllerTest.java`
 
-**Implementar tests de integración según CONSIGNAS (líneas 1642-1666) y RÚBRICAS (4.1):**
-- ⚠️ POST /mutant con mutante → 200 OK (1.5 pts)
-- ⚠️ POST /mutant con humano → 403 Forbidden (1.5 pts)
-- ⚠️ POST /mutant con DNA inválido → 400 Bad Request (1.0 pts)
-- ⚠️ GET /stats → 200 OK con JSON correcto (1.0 pts)
-- ⚠️ Verificar formato JSON de respuesta
-- ⚠️ Usar `@SpringBootTest` y `@AutoConfigureMockMvc`
-- ⚠️ Mockear `MutantService` y `StatsService`
+**✅ COMPLETADO según CONSIGNAS (líneas 1642-1666) y RÚBRICAS (4.1):**
+- ✅ POST /mutant con mutante → 200 OK (1.5 pts)
+- ✅ POST /mutant con humano → 403 Forbidden (1.5 pts)
+- ✅ POST /mutant con DNA inválido → 400 Bad Request (1.0 pts)
+- ✅ POST /mutant con DNA null → 400 Bad Request
+- ✅ POST /mutant con DNA vacío → 400 Bad Request
+- ✅ POST /mutant con matriz no cuadrada → 400 Bad Request
+- ✅ GET /stats → 200 OK con JSON correcto (1.0 pts)
+- ✅ GET /stats sin humanos → 200 OK con JSON correcto
+- ✅ Usa `@SpringBootTest` y `@AutoConfigureMockMvc`
+- ✅ Mockea `MutantService` y `StatsService`
 
 ---
 
 
 ## 🧪 FASE 7: Tests del Algoritmo
 
-### MutantDetectorTest
-**Prioridad: BAJA** - Después de implementar el algoritmo  
-**Estado:** Clase vacía  
-**Ubicación:** `src/test/java/com/utn/DetectorDeMutantes/service/MutantDetectorTest.java`
-
-**Implementar según CONSIGNAS (líneas 1673-1740) y RÚBRICAS (3.2, 3.3):**
-- ⚠️ Tests para casos mutantes (horizontal+diagonal, verticales, múltiples horizontales, diagonales, matriz grande)
-- ⚠️ Tests para casos humanos (solo 1 secuencia, sin secuencias)
-- ⚠️ Tests de validación (null, vacío, no cuadrada, caracteres inválidos, muy pequeña) - **Nota:** Aunque la validación principal está en el DTO, es buena práctica tener tests unitarios para el detector.
-
-**Requisitos según RÚBRICAS (líneas 249-266):**
-- **Mínimo: 15 tests** | **Óptimo: 17+ tests** (RÚBRICAS 3.2 - 2.45 pts)
-- **Cobertura mínima: 85%** | **Óptimo: 95%+** (RÚBRICAS 3.1 - 3.2 pts)
-
-**Casos requeridos (RÚBRICAS 3.3 - 5 pts):**
-1. ⚠️ Mutante - Horizontal (1 pt): `test.*[Hh]orizontal.*[Mm]utant`
-2. ⚠️ Mutante - Diagonal (1 pt): `test.*[Dd]iagonal.*[Mm]utant`
-3. ⚠️ Humano - Sin secuencias (1 pt): `test.*[Nn]o.*[Ss]equence`
-4. ⚠️ Humano - 1 secuencia (1 pt): `test.*[Oo]ne.*[Ss]equence`
-5. ⚠️ Validación - Inválido (1 pt): `test.*(Invalid|[Nn]ull|[Ee]mpty)`
+- ⚠️ **Cobertura mínima: 85%** | **Óptimo: 95%+** - **PENDIENTE VERIFICAR** (RÚBRICAS 3.1 - 3.2 pts)
 
 ---
 
@@ -204,7 +188,7 @@
 ```
 
 ### Checklist Rápido de Entrega (RÚBRICAS líneas 435-468)
-- [ ] 17+ tests en `MutantDetectorTest` pasan
+- [x] 17+ tests en `MutantDetectorTest` pasan (✅ 19/17 tests - COMPLETO)
 - [x] `if (sequenceCount > 1) return true;` implementado ✅
 - [x] Conversión a `char[][]` para acceso rápido ✅
 - [x] Boundary checking antes de buscar ✅
@@ -215,7 +199,7 @@
 - [x] 2+ DTOs con `@Data` (DnaRequest ✅, ErrorResponse ✅, StatsResponse ✅)
 - [x] Repository `extends JpaRepository` ✅
 - [x] `GlobalExceptionHandler` con `@RestControllerAdvice` ✅
-- [ ] 35+ tests totales
+- [x] 35+ tests totales (✅ 38/36 implementado: 19 MutantDetectorTest ✅, 5 MutantServiceTest ✅, 6 StatsServiceTest ✅, 8 MutantControllerTest ✅)
 - [x] POST /mutant → 200 (mutante), 403 (humano), 400 (inválido) ✅
 - [x] GET /stats → JSON correcto ✅
 - [x] Swagger UI en `/swagger-ui.html` funciona ✅

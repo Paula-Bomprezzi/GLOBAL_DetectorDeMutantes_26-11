@@ -64,6 +64,7 @@
 - ✅ Anotación `@ValidDnaSequence` creada con:
   - `@Constraint(validatedBy = ValidDnaSequenceValidator.class)`
   - `@Target` y `@Retention` configurados
+  - Métodos requeridos: `message()`, `groups()`, `payload()` (corregido para Bean Validation)
 - ✅ **`ValidDnaSequenceValidator` COMPLETO** (RÚBRICAS 2.5 - 1.5 pts):
   - ✅ Valida que `dna` no sea `null` o vacío
   - ✅ Valida que sea matriz cuadrada NxN
@@ -182,8 +183,66 @@
 - ✅ `Dockerfile` creado con multi-stage build
 
 ## Estructura de Tests
-- ✅ Clases de test creadas (vacías):
-  - `MutantControllerTest`
-  - `MutantDetectorTest`
-  - `MutantServiceTest`
-  - `StatsServiceTest`
+- ✅ Clases de test creadas y completas:
+  - `MutantControllerTest` (✅ 8/8 tests implementado - COMPLETO)
+  - `MutantDetectorTest` (✅ 19/17 tests implementado - COMPLETO)
+  - `MutantServiceTest` (✅ 5/5 tests implementado - COMPLETO)
+  - `StatsServiceTest` (✅ 6/6 tests implementado - COMPLETO)
+
+## Tests Implementados
+
+### MutantServiceTest (✅ 5/5 tests - COMPLETO)
+**Tests unitarios con mocks:**
+- ✅ `testAnalyzeDna_NewDna_ShouldCalculateHashAnalyzeAndSave()` - DNA nuevo (calcula hash, analiza, guarda)
+- ✅ `testAnalyzeDna_ExistingDna_ShouldReturnCached()` - DNA existente (retorna cacheado)
+- ✅ `testAnalyzeDna_NewDna_ShouldSaveWithCreatedAt()` - Verifica que se guarda con createdAt
+- ✅ `testAnalyzeDna_NewDna_ShouldCalculateHashCorrectly()` - Verifica cálculo correcto del hash
+- ✅ `testAnalyzeDna_ShouldHandleExceptionsCorrectly()` - Manejo de excepciones
+
+### StatsServiceTest (✅ 6/6 tests - COMPLETO)
+**Tests unitarios con mocks:**
+- ✅ `testGetStats_NormalRatio_ShouldCalculateCorrectly()` - Ratio normal (mutantes/humanos)
+- ✅ `testGetStats_NoHumans_ShouldReturnOnlyMutants()` - Sin humanos (caso especial)
+- ✅ `testGetStats_NoMutants_ShouldReturnZeroRatio()` - Sin mutantes
+- ✅ `testGetStats_NoRecords_ShouldReturnZeros()` - Sin registros
+- ✅ `testGetStats_RatioCalculation_ShouldBeCorrect()` - Verificar cálculo correcto del ratio
+- ✅ `testGetStats_LargeValues_ShouldCalculateCorrectly()` - Ratio con valores grandes
+
+### MutantControllerTest (✅ 8/8 tests - COMPLETO)
+**Tests de integración:**
+- ✅ `testCheckMutant_WhenMutant_ShouldReturn200()` - POST /mutant con mutante → 200 OK (1.5 pts)
+- ✅ `testCheckMutant_WhenHuman_ShouldReturn403()` - POST /mutant con humano → 403 Forbidden (1.5 pts)
+- ✅ `testCheckMutant_WhenInvalidDna_ShouldReturn400()` - POST /mutant con DNA inválido → 400 Bad Request (1.0 pts)
+- ✅ `testCheckMutant_WhenDnaIsNull_ShouldReturn400()` - POST /mutant con DNA null → 400 Bad Request
+- ✅ `testCheckMutant_WhenDnaIsEmpty_ShouldReturn400()` - POST /mutant con DNA vacío → 400 Bad Request
+- ✅ `testCheckMutant_WhenDnaIsNotSquare_ShouldReturn400()` - POST /mutant con matriz no cuadrada → 400 Bad Request
+- ✅ `testGetStats_ShouldReturn200WithCorrectJson()` - GET /stats → 200 OK con JSON correcto (1.0 pts)
+- ✅ `testGetStats_WhenNoHumans_ShouldReturn200WithCorrectJson()` - GET /stats sin humanos → 200 OK
+
+### MutantDetectorTest (✅ 19/17 tests - COMPLETO)
+**Casos Mutantes (8 tests):**
+- ✅ `testMutantWithHorizontalAndDiagonalSequences()` - Horizontal + Diagonal
+- ✅ `testMutantWithVerticalSequences()` - Secuencias verticales
+- ✅ `testMutantWithMultipleHorizontalSequences()` - Múltiples horizontales
+- ✅ `testMutantWithBothDiagonals()` - Diagonales ascendentes y descendentes
+- ✅ `testMutantWithLargeDna()` - Matriz grande 10x10
+- ✅ `testMutantAllSameCharacter()` - Todos los caracteres iguales
+- ✅ `testMutantDiagonalInCorner()` - Diagonal en esquina
+- ✅ `testHorizontalMutant()` - Cumple patrón requerido RÚBRICAS 3.3
+- ✅ `testDiagonalMutant()` - Cumple patrón requerido RÚBRICAS 3.3
+
+**Casos Humanos (3 tests):**
+- ✅ `testNotMutantWithOnlyOneSequence()` - Solo 1 secuencia (RÚBRICAS 3.3)
+- ✅ `testNotMutantWithNoSequences()` - Sin secuencias (RÚBRICAS 3.3)
+- ✅ `testNotMutantSmallDna()` - Matriz 4x4 sin secuencias
+
+**Validaciones (6 tests):**
+- ✅ `testNotMutantWithNullDna()` - DNA null (RÚBRICAS 3.3)
+- ✅ `testNotMutantWithEmptyDna()` - Array vacío (RÚBRICAS 3.3)
+- ✅ `testNotMutantWithNonSquareDna()` - Matriz no cuadrada
+- ✅ `testNotMutantWithInvalidCharacters()` - Caracteres inválidos (RÚBRICAS 3.3)
+- ✅ `testNotMutantWithNullRow()` - Fila null
+- ✅ `testNotMutantWithTooSmallDna()` - Matriz muy pequeña
+
+**Edge Cases (2 tests):**
+- ✅ `testNotMutantWithSequenceLongerThanFour()` - Secuencia de longitud 5
