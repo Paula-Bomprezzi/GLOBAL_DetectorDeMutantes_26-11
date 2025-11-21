@@ -6,33 +6,6 @@
 
 ---
 
-## 📚 FASE 1: Swagger (Documentación) - ✅ COMPLETADO
-
----
-
-## 📚 FASE 4: Swagger (Documentación) - ✅ COMPLETADO
-
-### SwaggerConfig - RÚBRICAS 4.2 (4.0 pts) ✅
-**Prioridad: MEDIA** - Documentación de la API  
-**Estado:** ✅ COMPLETO  
-**Ubicación:** `src/main/java/com/utn/DetectorDeMutantes/config/SwaggerConfig.java`
-
-**Implementación según CONSIGNAS (líneas 984-985) y RÚBRICAS (líneas 293-300):**
-- ✅ Anotado con `@Configuration`
-- ✅ Creado `@Bean` de `OpenAPI`
-- ✅ Configurada información de la API (título, versión, descripción, contacto)
-- ✅ Swagger UI accesible en `/swagger-ui.html` (1.0 pts) ✅
-- ✅ OpenAPI JSON en `/api-docs` (1.0 pts) ✅
-- ✅ Anotaciones en Controller: `@Tag`, `@Operation`, `@ApiResponse` (3+) (1.0 pts) ✅
-  - `@Tag` en `MutantController`
-  - `@Operation` en `POST /mutant` y `GET /stats`
-  - `@ApiResponse` (3 respuestas) en `POST /mutant`
-- ✅ `@Schema` en 2+ DTOs (1.0 pts) ✅
-  - `@Schema` en `DnaRequest` (clase + campo `dna` con ejemplo)
-  - `@Schema` en `StatsResponse` (clase + todos los campos)
-  - `@Schema` en `ErrorResponse` (clase + todos los campos)
-
----
 
 ## 🧪 FASE 5: Tests Básicos (Verificar Funcionamiento)
 
@@ -78,57 +51,6 @@
 
 ---
 
-## 🔴 FASE 6: Algoritmo (Dejar para el Final)
-
-### MutantDetector (Algoritmo de Detección) - 35 pts
-**Prioridad: BAJA** - Lo más complejo, pero solo una parte del sistema  
-**Estado:** Método `isMutant()` retorna siempre `true`  
-**Ubicación:** `src/main/java/com/utn/DetectorDeMutantes/service/MutantDetector.java`
-
-**Requisitos según RÚBRICAS (líneas 28-144):**
-
-#### 1.1 Correctitud Funcional (10 pts)
-- ✅ Método `isMutant(String[] dna)` que retorna `boolean`
-- ⚠️ Validar que DNA sea válido (NxN, solo A/T/C/G, mínimo 4x4) - **Nota:** Esta validación ya la hace `ValidDnaSequenceValidator` en el DTO, pero el algoritmo debe poder manejar un input ya validado.
-- ⚠️ Convertir `String[]` a `char[][]` para mejor rendimiento
-- ⚠️ Buscar secuencias de 4 letras iguales en 4 direcciones:
-  - Horizontal (→)
-  - Vertical (↓)
-  - Diagonal descendente (↘)
-  - Diagonal ascendente (↗)
-- ⚠️ **Early termination:** `if (sequenceCount > 1) return true;` (CRÍTICO - 2.4 pts)
-- ⚠️ Métodos auxiliares: `checkHorizontal()`, `checkVertical()`, `checkDiagonalDescending()`, `checkDiagonalAscending()`
-
-**Implementación según CONSIGNAS (líneas 1148-1244):**
-```java
-private boolean checkHorizontal(char[][] matrix, int row, int col) {
-    final char base = matrix[row][col];
-    return matrix[row][col + 1] == base &&
-           matrix[row][col + 2] == base &&
-           matrix[row][col + 3] == base;
-}
-```
-
-#### 1.2 Complejidad Temporal - RENDIMIENTO (12 pts)
-**Benchmarks requeridos (RÚBRICAS líneas 64-76):**
-- 6x6: ≤ 1ms (óptimo) / ≤ 5ms (aceptable)
-- 100x100: ≤ 20ms (óptimo) / ≤ 100ms (aceptable)
-- 1000x1000: ≤ 500ms (óptimo) / ≤ 5000ms (aceptable)
-
-#### 1.3 Complejidad Espacial (5 pts)
-- ❌ **NO usar** `ArrayList`, `HashMap`, `List`, `Set`, `Map` dentro de `isMutant()` (-3 pts si se usa)
-- ✅ Usar `toCharArray()` para conversión eficiente (+2 pts bonus)
-- ✅ Conversión a `char[][]` para acceso O(1)
-
-#### 1.4 Optimizaciones (8 pts)
-**Checklist (RÚBRICAS líneas 107-143):**
-- ⚠️ Early Termination (2.4 pts): `if (sequenceCount > 1) return true;`
-- ⚠️ Single Pass (2.0 pts): Solo 2 loops anidados (row, col)
-- ⚠️ Boundary Checking (1.6 pts): `if (col <= n - SEQUENCE_LENGTH)`
-- ⚠️ Direct Comparison (1.2 pts): Comparación directa sin loops
-- ⚠️ Validation Set O(1) (0.8 pts): `Set.of('A','T','C','G')` para validación
-
----
 
 ## 🧪 FASE 7: Tests del Algoritmo
 
@@ -283,10 +205,10 @@ private boolean checkHorizontal(char[][] matrix, int row, int col) {
 
 ### Checklist Rápido de Entrega (RÚBRICAS líneas 435-468)
 - [ ] 17+ tests en `MutantDetectorTest` pasan
-- [ ] `if (sequenceCount > 1) return true;` implementado
-- [ ] Conversión a `char[][]` para acceso rápido
-- [ ] Boundary checking antes de buscar
-- [ ] Sin estructuras auxiliares innecesarias
+- [x] `if (sequenceCount > 1) return true;` implementado ✅
+- [x] Conversión a `char[][]` para acceso rápido ✅
+- [x] Boundary checking antes de buscar ✅
+- [x] Sin estructuras auxiliares innecesarias ✅
 - [ ] Cobertura >85%
 - [x] 6 carpetas creadas (controller, dto, service, repository, entity, config)
 - [x] `@RequiredArgsConstructor` en services/controllers ✅
@@ -296,8 +218,8 @@ private boolean checkHorizontal(char[][] matrix, int row, int col) {
 - [ ] 35+ tests totales
 - [x] POST /mutant → 200 (mutante), 403 (humano), 400 (inválido) ✅
 - [x] GET /stats → JSON correcto ✅
-- [ ] Swagger UI en `/swagger-ui.html` funciona
-- [x] `@Tag`, `@Operation`, `@Schema` implementados (parcial) ✅
+- [x] Swagger UI en `/swagger-ui.html` funciona ✅
+- [x] `@Tag`, `@Operation`, `@Schema` implementados ✅
 - [x] Campo `dnaHash` con `unique = true` ✅
 - [x] Método `calculateDnaHash()` con SHA-256 ✅
 - [x] `findByDnaHash()` y `countByIsMutant()` en repository ✅

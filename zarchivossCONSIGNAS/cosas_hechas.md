@@ -98,9 +98,34 @@
 - ✅ **`@RequiredArgsConstructor` + campos `final`** implementado (RÚBRICAS 2.2 - 2.0 pts) ✅
 - ⚠️ Nota: Tiene `System.out.println()` que podría reemplazarse con logging (opcional)
 
-### MutantDetector - ⚠️ Pendiente (Algoritmo)
-- ✅ Método `isMutant(String[] dna)` creado y público
-- ⚠️ Retorna siempre `true` (lógica del algoritmo pendiente - DEJAR PARA EL FINAL)
+### MutantDetector - ✅ COMPLETO (Algoritmo de Detección) - RÚBRICAS 1.1-1.4 (35 pts)
+- ✅ Método `isMutant(String[] dna)` implementado completamente
+- ✅ **Validación completa** (RÚBRICAS 1.1):
+  - ✅ Valida que `dna` no sea `null` o vacío
+  - ✅ Valida tamaño mínimo 4x4
+  - ✅ Valida matriz cuadrada NxN
+  - ✅ Valida caracteres válidos (A, T, C, G) usando `Set.of()` para O(1)
+- ✅ **Conversión eficiente** (RÚBRICAS 1.3 - +2 pts bonus):
+  - ✅ Conversión `String[]` a `char[][]` con `toCharArray()`
+  - ✅ Acceso O(1) a la matriz
+- ✅ **Búsqueda en 4 direcciones** (RÚBRICAS 1.1):
+  - ✅ Horizontal (→) con `checkHorizontal()`
+  - ✅ Vertical (↓) con `checkVertical()`
+  - ✅ Diagonal descendente (↘) con `checkDiagonalDescending()`
+  - ✅ Diagonal ascendente (↗) con `checkDiagonalAscending()`
+- ✅ **Early Termination** (RÚBRICAS 1.4 - 2.4 pts):
+  - ✅ `if (sequenceCount > 1) return true;` después de cada incremento
+- ✅ **Single Pass** (RÚBRICAS 1.4 - 2.0 pts):
+  - ✅ Solo 2 loops anidados (row, col)
+- ✅ **Boundary Checking** (RÚBRICAS 1.4 - 1.6 pts):
+  - ✅ Verifica límites antes de cada búsqueda
+- ✅ **Direct Comparison** (RÚBRICAS 1.4 - 1.2 pts):
+  - ✅ Comparación directa sin loops en métodos auxiliares
+- ✅ **Validation Set O(1)** (RÚBRICAS 1.4 - 0.8 pts):
+  - ✅ `Set.of('A','T','C','G')` para validación eficiente
+- ✅ **Sin estructuras auxiliares** (RÚBRICAS 1.3 - 3.0 pts):
+  - ✅ No usa `ArrayList`, `HashMap`, `List`, `Set`, `Map` dentro de `isMutant()`
+  - ✅ Solo variables primitivas y `char[][]`
 
 ### StatsService - ✅ COMPLETO
 - ✅ Inyectado `DnaRecordRepository` con `@RequiredArgsConstructor` + `final`
