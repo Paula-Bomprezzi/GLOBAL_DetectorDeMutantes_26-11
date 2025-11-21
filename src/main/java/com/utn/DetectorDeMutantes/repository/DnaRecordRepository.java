@@ -7,9 +7,10 @@ import java.util.Optional;
 @Repository
 public interface DnaRecordRepository extends JpaRepository<DnaRecord, Long> {
 
-    //Métodos que se van a autogenerar
-    Optional<DnaRecord> findBydnaHash(String dnaHash);
+    //Métodos autogenerados
+    Optional<DnaRecord> findByDnaHash(String dnaHash);
 
-    long countByisMutant(boolean isMutant);
+    long countByIsMutant(boolean isMutant);
 }
+
 

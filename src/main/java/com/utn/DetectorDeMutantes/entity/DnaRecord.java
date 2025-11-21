@@ -11,7 +11,10 @@ import lombok.*;
 @Builder
 
 @Entity
-@Table(name = "DnaRecord")
+@Table(name = "DnaRecord", indexes = {
+        @Index(name = "idx_dna_hash", columnList = "dnaHash"),
+        @Index(name = "idx_is_mutant", columnList = "isMutant")
+})
 public class DnaRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +28,5 @@ public class DnaRecord {
     @Column(name = "created_at")
     private Timestamp createdAt;
 }
+
 
