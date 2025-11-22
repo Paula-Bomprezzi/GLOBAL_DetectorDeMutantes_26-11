@@ -1,53 +1,156 @@
-# GLOBAL_DetectorDeMutantes_26-11
+# Detector de Mutantes - API REST
+## Paula Bomprezzi - 48870
 
-Para acceder a la BD, entrar a través del link: http://localhost:8080/h2-console, NO por la apliciación H2 de escritorio
+API REST desarrollada con Spring Boot para detectar si una secuencia de ADN pertenece a un mutante. Un humano es mutante si tiene más de una secuencia de 4 letras iguales consecutivas en horizontal, vertical o diagonal.
 
-## 🚀 Tests de Performance (Benchmarks)
+## Tecnologías Utilizadas
 
-El proyecto incluye tests de medición de velocidad para verificar que el algoritmo cumple con los requisitos de rendimiento especificados en las rúbricas.
+- **Java 21** - Lenguaje de programación
+- **Spring Boot 3.5.7** - Framework para aplicaciones Java
+- **Spring Data JPA** - Persistencia de datos
+- **H2 Database** - Base de datos en memoria
+- **SpringDoc OpenAPI (Swagger)** - Documentación de la API
+- **Lombok** - Reducción de código boilerplate
+- **JUnit 5** - Framework de testing
+- **JaCoCo** - Cobertura de código
+- **Gradle** - Herramienta de construcción
+- **Caffeine** - Caché en memoria
+- **SLF4J** - Logging estructurado
 
-### Características de los Tests de Performance
+## Requisitos del Proyecto
 
-- ✅ **Múltiples ejecuciones**: Cada test ejecuta el algoritmo múltiples veces y calcula el promedio para obtener resultados más precisos y estables
-- ✅ **Warmup de JVM**: Se realiza una ejecución previa para calentar la JVM y evitar mediciones frías que puedan afectar los resultados
-- ✅ **Precisión decimal**: Los tiempos se muestran con precisión de 3 decimales (milisegundos) para capturar diferencias pequeñas
-- ✅ **Medición exclusiva**: Solo se mide el tiempo de ejecución del método `isMutant()`, excluyendo la generación de matrices de prueba
+### Algoritmo de Detección
+- Detecta secuencias de 4 letras iguales en 4 direcciones: horizontal, vertical, diagonal descendente y diagonal ascendente
+- Un mutante tiene más de una secuencia de 4 letras iguales
+- Validaciones: matriz cuadrada NxN, mínimo 4x4, máximo 1000x1000, solo caracteres A, T, C, G
+- Optimizaciones: early termination, single pass, conversión eficiente a char[][]
 
-### Benchmarks Implementados
+### API REST
 
-| Tamaño | Iteraciones | Límite Aceptable | Límite Óptimo |
-|--------|-------------|------------------|---------------|
-| **6x6** | 1000 ejecuciones | ≤ 5ms | ≤ 1ms |
-| **100x100** | 100 ejecuciones | ≤ 100ms | ≤ 20ms |
-| **1000x1000** | 10 ejecuciones | ≤ 5000ms | ≤ 500ms |
+#### POST /mutant
+Verifica si un ADN es mutante.
 
-### Ejecutar Tests de Performance
+**Request:**
+```json
+{
+  "dna": ["ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"]
+}
+```
 
+**Response:**
+- `200 OK` - Es mutante
+- `403 Forbidden` - No es mutante
+- `400 Bad Request` - DNA inválido
+
+#### GET /stats
+Obtiene estadísticas de los ADNs analizados.
+
+**Response:**
+```json
+{
+  "count_mutant_dna": 40,
+  "count_human_dna": 100,
+  "ratio": 0.4
+}
+```
+
+#### GET /health
+Endpoint de salud para monitoreo.
+
+**Response:**
+```json
+{
+  "status": "UP",
+  "timestamp": "2025-11-22T20:30:00Z"
+}
+```
+
+#### DELETE /mutant/{hash}
+Elimina un registro de ADN por su hash.
+
+**Response:**
+- `200 OK` - Eliminado correctamente
+- `404 Not Found` - Registro no encontrado
+
+### Persistencia
+- Base de datos H2 en memoria
+- Entidad `DnaRecord` con campos: id, dnaHash, isMutant, createdAt
+- Deduplicación usando hash SHA-256 (solo 1 registro por ADN)
+- Repository con métodos: `findByDnaHash()`, `countByIsMutant()`
+
+### Testing
+- 42 tests totales (38 funcionales + 4 de performance)
+- Cobertura de código: 87% (requisito: >80%)
+- Tests de performance para verificar rendimiento del algoritmo
+
+### Arquitectura
+- Arquitectura en capas: controller, service, repository, dto, entity, config
+- Dependency Injection con `@RequiredArgsConstructor`
+- DTOs para Request/Response
+- Manejo global de excepciones con `@RestControllerAdvice`
+- Validaciones con Bean Validation y validadores custom
+
+## Cómo Ejecutar
+
+### Requisitos Previos
+- Java 21 o superior
+- Gradle 7.x o superior
+
+### Compilar y Ejecutar
 ```bash
-# Ejecutar todos los tests de performance
+# Compilar el proyecto
+./gradlew build
+
+# Ejecutar la aplicación
+./gradlew bootRun
+```
+
+La aplicación estará disponible en `http://localhost:8080`
+
+### Ejecutar Tests
+```bash
+# Ejecutar todos los tests
+./gradlew test
+
+# Ejecutar tests de performance
 ./gradlew test --tests MutantDetectorTest.testPerformance*
 
-# Ejecutar test específico
-./gradlew test --tests MutantDetectorTest.testPerformance_6x6
-./gradlew test --tests MutantDetectorTest.testPerformance_100x100
-./gradlew test --tests MutantDetectorTest.testPerformance_1000x1000
+# Generar reporte de cobertura
+./gradlew test jacocoTestReport
 ```
 
-### Resultados Esperados
+El reporte de cobertura se encuentra en: `build/reports/jacoco/test/html/index.html`
 
-Los tests muestran en consola el tiempo promedio de ejecución:
+## Documentación de la API
+
+Una vez que la aplicación esté ejecutándose, puedes acceder a:
+
+- **Swagger UI**: http://localhost:8080/swagger-ui.html
+- **OpenAPI JSON**: http://localhost:8080/api-docs
+- **H2 Console**: http://localhost:8080/h2-console
+  - JDBC URL: `jdbc:h2:mem:mutantesdb`
+  - Usuario: `sa`
+  - Contraseña: (vacía)
+
+## Estructura del Proyecto
 
 ```
-Performance 6x6: 0.002ms (promedio de 1000 ejecuciones, límite: 5ms)
-Performance 100x100: 0.370ms (promedio de 100 ejecuciones, límite: 100ms)
-Performance 1000x1000: 11.257ms (promedio de 10 ejecuciones, límite: 5000ms)
+src/main/java/com/utn/DetectorDeMutantes/
+├── controller/     # Endpoints REST
+├── service/        # Lógica de negocio
+├── repository/     # Acceso a datos
+├── dto/            # Objetos de transferencia
+├── entity/         # Entidades JPA
+├── validation/     # Validadores custom
+├── exception/      # Manejo de excepciones
+└── config/         # Configuraciones (Swagger, Cache, etc.)
 ```
 
-### Optimizaciones Verificadas
+## Características Adicionales
 
-Los tests verifican que el algoritmo implementa las siguientes optimizaciones:
+- **Logging estructurado** con SLF4J
+- **Caché en memoria** con Caffeine para mejorar rendimiento
+- **Procesamiento asíncrono** para mejor escalabilidad
+- **Validación de tamaño máximo** (1000x1000) para proteger el servidor
+- **Endpoint de salud** para monitoreo
 
-- ✅ **Early Termination**: El algoritmo termina inmediatamente al encontrar 2 secuencias
-- ✅ **Single Pass**: Solo recorre la matriz una vez (2 loops anidados)
-- ✅ **Conversión eficiente**: Usa `char[][]` para acceso O(1)
-- ✅ **Comparación directa**: Sin loops innecesarios en métodos auxiliares

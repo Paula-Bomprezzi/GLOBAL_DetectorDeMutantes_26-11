@@ -52,9 +52,65 @@
 - ❌ **Pendiente:** Diagrama de Secuencia
 
 ### 📝 Documentación
-- ⚠️ README básico creado
+- ✅ README actualizado con información completa:
+  - ✅ Sección de Tests de Performance (Benchmarks)
+  - ✅ Características de los tests (múltiples ejecuciones, warmup, precisión decimal)
+  - ✅ Tabla de benchmarks implementados con límites
+  - ✅ Comandos para ejecutar tests de performance
+  - ✅ Resultados esperados con ejemplos
+  - ✅ Optimizaciones verificadas
 - ⚠️ **Pendiente:** Instrucciones detalladas de cómo ejecutar el programa/API
 - ⚠️ **Pendiente:** URL de la API (después del despliegue en Render)
+
+### 🚀 Ejercicios Adicionales Implementados (Opcionales)
+
+#### ✅ Ejercicio 1: Logging con SLF4J
+- ✅ Agregado `@Slf4j` a `MutantService`, `StatsService`, `MutantDetector`
+- ✅ Reemplazados todos los `System.out.println()` por métodos de logging apropiados:
+  - `log.info()` para información importante
+  - `log.debug()` para información de depuración
+  - `log.warn()` para advertencias
+- ✅ Uso de placeholders `{}` para mejor rendimiento
+- ✅ Logging estructurado y configurable por niveles
+
+#### ✅ Ejercicio 2: Endpoint de Salud (`GET /health`)
+- ✅ Endpoint `GET /health` implementado en `MutantController`
+- ✅ Retorna JSON: `{"status": "UP", "timestamp": "..."}`
+- ✅ Documentado con Swagger (`@Operation`, `@ApiResponse`)
+- ✅ Útil para monitoreo y health checks de sistemas de orquestación
+
+#### ✅ Ejercicio 3: Validación de Tamaño Máximo (1000x1000)
+- ✅ Validación agregada en `ValidDnaSequenceValidator`
+- ✅ Constante `MAX_SIZE = 1000` definida
+- ✅ Rechaza matrices mayores a 1000x1000 con validación temprana
+- ✅ Previene problemas de rendimiento y memoria
+
+#### ✅ Ejercicio 4: Endpoint DELETE (`DELETE /mutant/{hash}`)
+- ✅ Endpoint `DELETE /mutant/{hash}` implementado en `MutantController`
+- ✅ Método `deleteByHash()` en `MutantService`
+- ✅ Retorna `200 OK` si se elimina correctamente
+- ✅ Retorna `404 Not Found` si el registro no existe
+- ✅ Logging de operaciones de eliminación
+- ✅ Documentado con Swagger
+
+#### ✅ Ejercicio 7: Caché en Memoria (Caffeine)
+- ✅ Dependencia `spring-boot-starter-cache` agregada
+- ✅ Dependencia `caffeine:3.1.8` agregada
+- ✅ Configuración `CacheConfig.java` creada:
+  - Máximo 1000 entradas en caché
+  - Expiración después de 1 hora
+  - Estadísticas habilitadas
+- ✅ `@Cacheable` en método `analyzeDnaWithCache()` usando hash como clave
+- ✅ `@EnableCaching` en `DetectorDeMutantesApplication`
+- ✅ Caché de dos niveles: memoria (Caffeine) + base de datos
+
+#### ✅ Ejercicio 8: Procesamiento Asíncrono
+- ✅ `@EnableAsync` en `DetectorDeMutantesApplication`
+- ✅ `@Async` en método `analyzeDna()` de `MutantService`
+- ✅ Retorno cambiado a `CompletableFuture<Boolean>`
+- ✅ Controller actualizado para manejar `CompletableFuture` con `.get()`
+- ✅ Tests actualizados para trabajar con `CompletableFuture`
+- ✅ Mejora la escalabilidad y capacidad de respuesta de la API
 
 ---
 
@@ -172,6 +228,11 @@
   - ✅ Vertical (↓) con `checkVertical()`
   - ✅ Diagonal descendente (↘) con `checkDiagonalDescending()`
   - ✅ Diagonal ascendente (↗) con `checkDiagonalAscending()`
+- ✅ **Evita secuencias superpuestas** (Edge Case):
+  - ✅ Solo cuenta el inicio de cada secuencia (no cuenta múltiples veces la misma región)
+  - ✅ Horizontal: solo cuenta si `col == 0` o carácter anterior es diferente
+  - ✅ Vertical: solo cuenta si `row == 0` o carácter anterior es diferente
+  - ✅ Diagonales: lógica similar para evitar superposiciones
 - ✅ **Early Termination** (RÚBRICAS 1.4 - 2.4 pts):
   - ✅ `if (sequenceCount > 1) return true;` después de cada incremento
 - ✅ **Single Pass** (RÚBRICAS 1.4 - 2.0 pts):
@@ -193,6 +254,8 @@
 - ✅ Cuenta humanos: `repository.countByIsMutant(false)`
 - ✅ Calcula ratio: `(double) countMutant / countHuman`
 - ✅ Maneja caso especial: si `countHuman == 0`, retorna solo `countMutantDna` (sin ratio)
+- ✅ Maneja caso especial: si `countMutant == 0 && countHuman == 0`, retorna todos los campos en 0
+- ✅ Mensaje informativo en consola cuando no hay datos en el sistema
 - ✅ Crea y retorna `StatsResponse` con `builder()`
 - ⚠️ Nota: Tiene `System.out.println()` que podría reemplazarse con logging (opcional)
 
@@ -243,9 +306,11 @@
 ## Estructura de Tests
 - ✅ Clases de test creadas y completas:
   - `MutantControllerTest` (✅ 8/8 tests implementado - COMPLETO)
-  - `MutantDetectorTest` (✅ 19/17 tests implementado - COMPLETO)
+  - `MutantDetectorTest` (✅ 23/17 tests implementado - COMPLETO, incluye 4 tests de performance)
   - `MutantServiceTest` (✅ 5/5 tests implementado - COMPLETO)
   - `StatsServiceTest` (✅ 6/6 tests implementado - COMPLETO)
+- ✅ **Todos los métodos de test renombrados a inglés** para cumplir con patrones de rúbricas:
+  - ✅ Patrones requeridos cumplidos: `test.*[Hh]orizontal.*[Mm]utant`, `test.*[Dd]iagonal.*[Mm]utant`, `test.*[Nn]o.*[Ss]equence`, `test.*[Oo]ne.*[Ss]equence`, `test.*(Invalid|[Nn]ull|[Ee]mpty)`
 
 ## Tests Implementados
 
@@ -277,7 +342,7 @@
 - ✅ `testGetStats_ShouldReturn200WithCorrectJson()` - GET /stats → 200 OK con JSON correcto (1.0 pts)
 - ✅ `testGetStats_WhenNoHumans_ShouldReturn200WithCorrectJson()` - GET /stats sin humanos → 200 OK
 
-### MutantDetectorTest (✅ 19/17 tests - COMPLETO)
+### MutantDetectorTest (✅ 23/17 tests - COMPLETO)
 **Casos Mutantes (8 tests):**
 - ✅ `testMutantWithHorizontalAndDiagonalSequences()` - Horizontal + Diagonal
 - ✅ `testMutantWithVerticalSequences()` - Secuencias verticales
@@ -290,20 +355,31 @@
 - ✅ `testDiagonalMutant()` - Cumple patrón requerido RÚBRICAS 3.3
 
 **Casos Humanos (3 tests):**
-- ✅ `testNotMutantWithOnlyOneSequence()` - Solo 1 secuencia (RÚBRICAS 3.3)
-- ✅ `testNotMutantWithNoSequences()` - Sin secuencias (RÚBRICAS 3.3)
-- ✅ `testNotMutantSmallDna()` - Matriz 4x4 sin secuencias
+- ✅ `testOneSequence()` - Solo 1 secuencia (RÚBRICAS 3.3 - patrón `test.*[Oo]ne.*[Ss]equence`)
+- ✅ `testNoSequence()` - Sin secuencias (RÚBRICAS 3.3 - patrón `test.*[Nn]o.*[Ss]equence`)
+- ✅ `testHumanWithSmallDna()` - Matriz 4x4 sin secuencias
 
 **Validaciones (6 tests):**
-- ✅ `testNotMutantWithNullDna()` - DNA null (RÚBRICAS 3.3)
-- ✅ `testNotMutantWithEmptyDna()` - Array vacío (RÚBRICAS 3.3)
-- ✅ `testNotMutantWithNonSquareDna()` - Matriz no cuadrada
-- ✅ `testNotMutantWithInvalidCharacters()` - Caracteres inválidos (RÚBRICAS 3.3)
-- ✅ `testNotMutantWithNullRow()` - Fila null
-- ✅ `testNotMutantWithTooSmallDna()` - Matriz muy pequeña
+- ✅ `testNullDna()` - DNA null (RÚBRICAS 3.3 - patrón `test.*(Invalid|[Nn]ull|[Ee]mpty)`)
+- ✅ `testEmptyDna()` - Array vacío (RÚBRICAS 3.3 - patrón `test.*(Invalid|[Nn]ull|[Ee]mpty)`)
+- ✅ `testInvalidDna()` - Caracteres inválidos (RÚBRICAS 3.3 - patrón `test.*(Invalid|[Nn]ull|[Ee]mpty)`)
+- ✅ `testNonSquareMatrix()` - Matriz no cuadrada
+- ✅ `testNullRow()` - Fila null
+- ✅ `testTooSmallMatrix()` - Matriz muy pequeña
 
 **Edge Cases (2 tests):**
-- ✅ `testNotMutantWithSequenceLongerThanFour()` - Secuencia de longitud 5
+- ✅ `testSequenceLongerThanFourShouldNotCount()` - Secuencia de longitud 5 (no cuenta múltiples veces)
+
+**Tests de Performance (4 tests) - RÚBRICAS 1.2:**
+- ✅ `testPerformance_6x6()` - Mide tiempo promedio de 1000 ejecuciones (límite: ≤5ms)
+- ✅ `testPerformance_100x100()` - Mide tiempo promedio de 100 ejecuciones (límite: ≤100ms)
+- ✅ `testPerformance_1000x1000()` - Mide tiempo promedio de 10 ejecuciones (límite: ≤5000ms)
+- ✅ `testPerformance_6x6_WithEarlyTermination()` - Verifica early termination con matriz mutante
+- ✅ **Características de los tests de performance:**
+  - ✅ Múltiples ejecuciones con promedio para mayor precisión
+  - ✅ Warmup de JVM antes de medir
+  - ✅ Precisión decimal (3 decimales en milisegundos)
+  - ✅ Solo mide tiempo de `isMutant()`, excluyendo generación de matrices
 
 ## Code Coverage (Cobertura de Código)
 

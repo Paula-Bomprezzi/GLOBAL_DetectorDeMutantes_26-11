@@ -4,14 +4,19 @@ import com.utn.DetectorDeMutantes.entity.DnaRecord;
 import com.utn.DetectorDeMutantes.exception.DnaHashCalculationException;
 import com.utn.DetectorDeMutantes.repository.DnaRecordRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class MutantService {
@@ -55,17 +60,24 @@ public class MutantService {
         }
     }
 
-    public boolean analyzeDna( String[] dna){
+    @Async
+    public CompletableFuture<Boolean> analyzeDna(String[] dna){
         String hash = calculateDnaHash(dna);
+        return analyzeDnaWithCache(dna, hash);
+    }
+    
+    @Cacheable(value = "dnaCache", key = "#hash")
+    private CompletableFuture<Boolean> analyzeDnaWithCache(String[] dna, String hash){
         Optional<DnaRecord> dnaBuscado = repo.findByDnaHash(hash);
         if(dnaBuscado.isPresent()){
             boolean isMutant = dnaBuscado.get().getIsMutant();
-            System.out.println("=========================RESULTADOS=========================");
-            System.out.println("El ADN ingresado dice que el sujeto...");
-            System.out.println( isMutant ? "ES MUTANTE!!" : "No es mutante");
-            return isMutant;
+            log.info("=========================RESULTADOS=========================");
+            log.info("El ADN ingresado dice que el sujeto...");
+            log.info(isMutant ? "ES MUTANTE!!" : "No es mutante");
+            log.debug("DNA encontrado en caché (hash: {})", hash);
+            return CompletableFuture.completedFuture(isMutant);
     } else{
-            System.out.println("ANALIZANDO.......");
+            log.debug("ANALIZANDO.......");
             boolean isMutant = mutantDetector.isMutant(dna);
             DnaRecord dnaAnalizado = DnaRecord.builder()
                     .dnaHash(hash)
@@ -73,13 +85,26 @@ public class MutantService {
                     .createdAt(new Timestamp(System.currentTimeMillis()))
                     .build();
             repo.save(dnaAnalizado);
-            System.out.println("ANÁLISIS CONCLUIDO");
-            System.out.println("=========================RESULTADOS=========================");
-            System.out.println("El ADN ingresado dice que el sujeto...");
-            System.out.println( isMutant ? "ES MUTANTE!!" : "No es mutante");
-            return isMutant;
+            log.debug("ANÁLISIS CONCLUIDO");
+            log.info("=========================RESULTADOS=========================");
+            log.info("El ADN ingresado dice que el sujeto...");
+            log.info(isMutant ? "ES MUTANTE!!" : "No es mutante");
+            log.debug("DNA guardado en BD (hash: {})", hash);
+            return CompletableFuture.completedFuture(isMutant);
         }
     };
+
+    public ResponseEntity<?> deleteByHash(String hash) {
+        Optional<DnaRecord> record = repo.findByDnaHash(hash);
+        if (record.isPresent()) {
+            repo.delete(record.get());
+            log.info("Registro eliminado correctamente (hash: {})", hash);
+            return ResponseEntity.ok().build();
+        } else {
+            log.warn("Intento de eliminar registro inexistente (hash: {})", hash);
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
 
 

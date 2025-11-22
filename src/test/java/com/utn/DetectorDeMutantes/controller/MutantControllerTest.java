@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import java.util.concurrent.CompletableFuture;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -46,7 +47,7 @@ class MutantControllerTest {
             """;
 
         //Simulo que da true pq no necesito saber sie l algoritmo funciona, sino como el endpoint responde a un true
-        when(mutantService.analyzeDna(any(String[].class))).thenReturn(true);
+        when(mutantService.analyzeDna(any(String[].class))).thenReturn(CompletableFuture.completedFuture(true));
 
         // Act & Assert
         mockMvc.perform(post("/mutant")
@@ -66,7 +67,7 @@ class MutantControllerTest {
             """;
 
         //Lo mismo, no me importa loq ue entre, testeo que le pasa si da false
-        when(mutantService.analyzeDna(any(String[].class))).thenReturn(false);
+        when(mutantService.analyzeDna(any(String[].class))).thenReturn(CompletableFuture.completedFuture(false));
 
         // Act & Assert
         mockMvc.perform(post("/mutant")

@@ -48,9 +48,9 @@ public class MutantController {
 
 //CARGAR UN ADN
     @PostMapping("/mutant")
-    public ResponseEntity<?> checkMutant(@RequestBody @Valid DnaRequest request) {
-        // Llamar al servicio para analizar el DNA
-        boolean isMutant = mutantService.analyzeDna(request.getDna());
+    public ResponseEntity<?> checkMutant(@RequestBody @Valid DnaRequest request) throws Exception {
+        // Llamar al servicio para analizar el DNA (async)
+        boolean isMutant = mutantService.analyzeDna(request.getDna()).get();
         
         // Según CONSIGNAS:
         // - 200 OK si es mutante
@@ -77,9 +77,42 @@ public class MutantController {
         return ResponseEntity.ok(stats);
     }
 
+    @Operation(
+            summary = "Endpoint de salud",
+            description = "Retorna el estado de la API"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "API funcionando correctamente"
+    )
+    @GetMapping("/health")
+    public ResponseEntity<?> health() {
+        return ResponseEntity.ok().body(
+            new java.util.HashMap<String, Object>() {{
+                put("status", "UP");
+                put("timestamp", java.time.Instant.now().toString());
+            }}
+        );
+    }
 
-
-   
+    @Operation(
+            summary = "Eliminar un registro de ADN por hash",
+            description = "Elimina un registro de ADN de la base de datos usando su hash SHA-256"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Registro eliminado correctamente"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "No se encontró el registro con el hash especificado"
+            )
+    })
+    @DeleteMapping("/mutant/{hash}")
+    public ResponseEntity<?> deleteByHash(@PathVariable String hash) {
+        return mutantService.deleteByHash(hash);
+    }
 
 }
 

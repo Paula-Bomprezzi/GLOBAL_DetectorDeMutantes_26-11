@@ -8,6 +8,7 @@ import java.util.Set;
 public class ValidDnaSequenceValidator implements ConstraintValidator<ValidDnaSequence, String[]> {
     private static final Set<Character> VALID_BASES = Set.of('A', 'T', 'C', 'G');
     private static final int MIN_SIZE = 4;
+    private static final int MAX_SIZE = 1000;
 
     @Override
     public boolean isValid(String[] dna, ConstraintValidatorContext context) {
@@ -23,7 +24,12 @@ public class ValidDnaSequenceValidator implements ConstraintValidator<ValidDnaSe
             return false;
         }
 
-        // 3. Validar que sea matriz cuadrada NxN y que ninguna fila sea null
+        // 3. Validar tamaño máximo 1000x1000
+        if (n > MAX_SIZE) {
+            return false;
+        }
+
+        // 4. Validar que sea matriz cuadrada NxN y que ninguna fila sea null
         for (String row : dna) {
             // Validar que ninguna fila sea null
             if (row == null) {
@@ -36,7 +42,7 @@ public class ValidDnaSequenceValidator implements ConstraintValidator<ValidDnaSe
             }
         }
 
-        // 4. Validar que solo contenga caracteres A, T, C, G (usando Set para O(1))
+        // 5. Validar que solo contenga caracteres A, T, C, G (usando Set para O(1))
         for (String row : dna) {
             for (char c : row.toCharArray()) {
                 if (!VALID_BASES.contains(c)) {

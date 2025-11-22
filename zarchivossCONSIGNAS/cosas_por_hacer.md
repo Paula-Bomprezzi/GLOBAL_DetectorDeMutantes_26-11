@@ -18,23 +18,6 @@
 - ⚠️ Verificar que la API funciona en producción
 - ⚠️ Obtener URL de la API desplegada
 
-#### 2. Code Coverage > 80% ✅ VERIFICADO
-**Prioridad: ALTA** - Requisito Nivel 3  
-**Estado:** ✅ **COMPLETO** - Cobertura verificada: **87%**  
-**Ubicación:** Reportes de JaCoCo
-
-**Resultados:**
-- ✅ Cobertura Total: **87%** (requisito: >80%) ✅
-- ✅ Controller: 100%
-- ✅ Service: 94%
-- ✅ Validation: 95%
-- ✅ DTO: 100%
-- ⚠️ Exception: 38% (mejorable, pero no crítico para cumplir requisito)
-
-**Nota:** El requisito de >80% está cumplido. La cobertura del paquete de excepciones es baja pero no afecta el cumplimiento del requisito. Si se desea mejorar, se pueden agregar tests para:
-- `GlobalExceptionHandler.handleConstraintViolationException()` (probablemente no probado)
-- `GlobalExceptionHandler.handleDnaHashCalculationException()` (probablemente no probado)
-- Ambos constructores de `DnaHashCalculationException`
 
 #### 3. Diagrama de Secuencia
 **Prioridad: ALTA** - Requisito Nivel 3  
@@ -56,10 +39,11 @@
 
 #### 4. README Completo con Instrucciones
 **Prioridad: ALTA** - Requisito de Entrega  
-**Estado:** ⚠️ **PARCIAL** (README básico existe)  
+**Estado:** ⚠️ **PARCIAL** (README básico existe, sección de performance agregada)  
 **Ubicación:** `README.md`
 
-**Tareas:**
+
+**Tareas pendientes:**
 - ⚠️ Agregar instrucciones de cómo ejecutar el programa localmente
 - ⚠️ Agregar instrucciones de cómo ejecutar la API
 - ⚠️ Agregar ejemplos de uso de los endpoints
@@ -69,20 +53,6 @@
 - ⚠️ Agregar requisitos previos (Java, Gradle, etc.)
 
 ---
-
-## ✅ Tests Completados (Ya implementados - No hacer)
-
-### MutantServiceTest
-**Estado:** ✅ **COMPLETO - 5/5 tests implementado**
-
-### StatsServiceTest
-**Estado:** ✅ **COMPLETO - 6/6 tests implementado**
-
-### MutantControllerTest
-**Estado:** ✅ **COMPLETO - 8/8 tests implementado**
-
-### MutantDetectorTest
-**Estado:** ✅ **COMPLETO - 19/17 tests implementado**
 
 ---
 
@@ -108,61 +78,11 @@
 
 ---
 
-## 🧪 FASE 7: Tests del Algoritmo
-
-- ✅ **Cobertura verificada: 87%** (requisito examen: >80%) ✅
-
----
-
-## 📈 Cobertura Requerida
-
-**Requisito Examen Mercadolibre (Nivel 3):**
-- ✅ **Code coverage > 80%** - **CUMPLIDO** (87% total)
-
-**Métricas Adicionales (RÚBRICAS):**
-- ⚠️ Cobertura Total: ≥90% (óptimo) / ≥70% (aceptable)
-- ⚠️ Cobertura Service: ≥96% (óptimo) / ≥85% (aceptable)
-- ⚠️ Cobertura Controller: ≥95% (óptimo) / ≥80% (aceptable)
-
-**Comandos de verificación:**
-```bash
-./gradlew test jacocoTestReport
-# Ver: build/reports/jacoco/test/html/index.html
-```
-
----
 
 ## 🔵 Ejercicios Opcionales (No otorgan puntos para la evaluación principal)
 
 ### Nivel 1: Básico
 
-#### Ejercicio 1: Agregar Logging (Opcional)
-**Ubicación:** `MutantDetector.java` y `MutantService.java`  
-**Implementación (CONSIGNAS líneas 2427-2441):**
-- ⚠️ Agregar `@Slf4j` a la clase
-- ⚠️ Reemplazar `System.out.println()` con `log.debug()` o `log.info()`
-- ⚠️ Usar `log.debug()` para ver qué direcciones se están chequeando
-
-#### Ejercicio 2: Endpoint de Salud (Opcional)
-**Ubicación:** Nuevo Controller o `MutantController.java`  
-**Implementación (CONSIGNAS líneas 2444-2451):**
-- ⚠️ Crear un endpoint `GET /health`
-- ⚠️ Retornar JSON: `{"status": "UP", "timestamp": "..."}`
-
-#### Ejercicio 3: Validación de Tamaño Máximo (Opcional)
-**Ubicación:** `ValidDnaSequenceValidator.java` o nueva anotación  
-**Implementación (CONSIGNAS línea 2454):**
-- ⚠️ Agregar validación para rechazar matrices mayores a 1000x1000
-
-### Nivel 2: Intermedio
-
-#### Ejercicio 4: Endpoint DELETE (Opcional)
-**Ubicación:** `MutantController.java`  
-**Implementación (CONSIGNAS línea 2460):**
-- ⚠️ Crear endpoint `DELETE /mutant/{hash}`
-- ⚠️ Buscar registro por hash
-- ⚠️ Eliminar si existe, retornar 404 si no existe
-- ⚠️ Retornar 200 OK si se eliminó correctamente
 
 #### Ejercicio 5: Filtro de Estadísticas (Opcional)
 **Ubicación:** `StatsService.java` y `MutantController.java`  
@@ -181,23 +101,6 @@
 - ⚠️ Retornar 429 Too Many Requests cuando se exceda el límite
 
 ### Nivel 3: Avanzado
-
-#### Ejercicio 7: Caché en Memoria (Opcional)
-**Ubicación:** `MutantService.java`  
-**Implementación (CONSIGNAS línea 2477):**
-- ⚠️ Agregar dependencia `spring-boot-starter-cache` en `build.gradle`
-- ⚠️ Habilitar caché con `@EnableCaching` en clase de configuración
-- ⚠️ Agregar `@Cacheable(value = "dnaCache", key = "#dna")` al método `analyzeDna()`
-- ⚠️ Configurar caché (Caffeine, Redis, o simple)
-- ⚠️ **Nota:** Esto es adicional al caché en BD, no reemplazo
-
-#### Ejercicio 8: Async Processing (Opcional)
-**Ubicación:** `MutantService.java`  
-**Implementación (CONSIGNAS línea 2480):**
-- ⚠️ Habilitar async con `@EnableAsync` en configuración
-- ⚠️ Convertir `analyzeDna()` en asíncrono usando `@Async`
-- ⚠️ Cambiar retorno a `CompletableFuture<Boolean>`
-- ⚠️ Ajustar Controller para manejar respuesta asíncrona
 
 #### Ejercicio 9: Migrar a PostgreSQL (Opcional)
 **Ubicación:** `application.properties` y `Dockerfile`  
@@ -250,6 +153,8 @@
 - [x] Validación completa del input ✅
 - [x] Búsqueda en horizontal, vertical y oblicua ✅
 - [x] Algoritmo optimizado ✅
+- [x] **Corrección de secuencias superpuestas** ✅
+- [x] **Tests de performance implementados** ✅
 
 **Nivel 2:**
 - [x] API REST con Spring Boot ✅
@@ -261,32 +166,41 @@
 - [x] Base de datos H2 configurada ✅
 - [x] Solo 1 registro por ADN (hash único) ✅
 - [x] Endpoint `GET /stats` implementado ✅
-- [x] Tests implementados (38 tests) ✅
+- [x] Manejo de caso cuando ambos contadores son 0 ✅
+- [x] Tests implementados (42 tests: 38 funcionales + 4 performance) ✅
 - [x] **Code coverage > 80% verificado** ✅ (87% total)
+- [x] **Tests de performance verificados** ✅ (cumplen límites óptimos)
+- [x] **Patrones de nombres de test cumplidos** ✅ (RÚBRICAS 3.3)
 - [ ] **Diagrama de Secuencia** ❌
 
 **Entrega:**
 - [x] Código fuente en repositorio GitHub ✅
-- [ ] **Instrucciones de ejecución en README** ⚠️
+- [x] **README con sección de performance** ✅
+- [ ] **Instrucciones completas de ejecución en README** ⚠️ (parcial)
 - [ ] **URL de la API (después de despliegue)** ❌
 - [ ] **Diagrama de Secuencia en PDF** ❌
 
 ### Checklist Adicional (RÚBRICAS)
-- [x] 17+ tests en `MutantDetectorTest` pasan (✅ 19/17 tests - COMPLETO)
+- [x] 17+ tests en `MutantDetectorTest` pasan (✅ 23/17 tests - COMPLETO, incluye 4 performance)
 - [x] `if (sequenceCount > 1) return true;` implementado ✅
 - [x] Conversión a `char[][]` para acceso rápido ✅
 - [x] Boundary checking antes de buscar ✅
 - [x] Sin estructuras auxiliares innecesarias ✅
+- [x] Evita secuencias superpuestas en la misma dirección ✅
 - [x] 6 carpetas creadas (controller, dto, service, repository, entity, config)
 - [x] `@RequiredArgsConstructor` en services/controllers ✅
 - [x] 2+ DTOs con `@Data` (DnaRequest ✅, ErrorResponse ✅, StatsResponse ✅)
 - [x] Repository `extends JpaRepository` ✅
 - [x] `GlobalExceptionHandler` con `@RestControllerAdvice` ✅
-- [x] 35+ tests totales (✅ 38/36 implementado)
+- [x] 35+ tests totales (✅ 42/36 implementado: 38 funcionales + 4 performance)
 - [x] POST /mutant → 200 (mutante), 403 (humano), 400 (inválido) ✅
 - [x] GET /stats → JSON correcto ✅
+- [x] GET /stats maneja caso cuando ambos contadores son 0 ✅
 - [x] Swagger UI en `/swagger-ui.html` funciona ✅
 - [x] `@Tag`, `@Operation`, `@Schema` implementados ✅
 - [x] Campo `dnaHash` con `unique = true` ✅
 - [x] Método `calculateDnaHash()` con SHA-256 ✅
 - [x] `findByDnaHash()` y `countByIsMutant()` en repository ✅
+- [x] **Tests de performance con múltiples ejecuciones y promedio** ✅
+- [x] **Patrones de nombres de test cumplidos** (RÚBRICAS 3.3) ✅
+- [x] **Todos los métodos de test en inglés** ✅

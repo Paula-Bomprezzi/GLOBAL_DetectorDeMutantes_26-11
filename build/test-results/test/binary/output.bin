@@ -1,4 +1,0 @@
-LPerformance 100x100: 0,370ms (promedio de 100 ejecuciones, límite: 100ms)
-GPerformance 6x6: 0,002ms (promedio de 1000 ejecuciones, límite: 5ms)
-MPerformance 6x6 (early termination): 0,002ms (promedio de 1000 ejecuciones)
-OPerformance 1000x1000: 11,257ms (promedio de 10 ejecuciones, límite: 5000ms)

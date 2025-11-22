@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Timestamp;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -51,14 +52,15 @@ class MutantServiceTest {
 
     @Test
     @DisplayName("DNA nuevo - debe calcular hash, analizar y guardar")
-    void testNewDna_ShouldCalculateHashAnalyzeAndSave() {
+    void testNewDna_ShouldCalculateHashAnalyzeAndSave() throws Exception {
         // Arrange
         when(repository.findByDnaHash(anyString())).thenReturn(Optional.empty()); //Acá el método me va a calcular el hash, pero lo ignoro
         when(mutantDetector.isMutant(mutantDna)).thenReturn(true);
         when(repository.save(any(DnaRecord.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        boolean result = mutantService.analyzeDna(mutantDna);
+        CompletableFuture<Boolean> future = mutantService.analyzeDna(mutantDna);
+        boolean result = future.get();
 
         // Assert
         assertTrue(result);
@@ -69,7 +71,7 @@ class MutantServiceTest {
 
     @Test
     @DisplayName("DNA existente - debe retornar cacheado sin analizar")
-    void testExistingDna_ShouldReturnCached() {
+    void testExistingDna_ShouldReturnCached() throws Exception {
         // Arrange
         DnaRecord existingRecord = DnaRecord.builder()
                 .id(1L)
@@ -81,7 +83,8 @@ class MutantServiceTest {
         when(repository.findByDnaHash(anyString())).thenReturn(Optional.of(existingRecord));
 
         // Act
-        boolean result = mutantService.analyzeDna(mutantDna);
+        CompletableFuture<Boolean> future = mutantService.analyzeDna(mutantDna);
+        boolean result = future.get();
 
         // Assert
         assertTrue(result);
@@ -140,7 +143,8 @@ class MutantServiceTest {
 
         // Act & Assert - El método debería funcionar normalmente
         assertDoesNotThrow(() -> {
-            boolean result = mutantService.analyzeDna(mutantDna);
+            CompletableFuture<Boolean> future = mutantService.analyzeDna(mutantDna);
+            boolean result = future.get();
             assertTrue(result);
         });
         
