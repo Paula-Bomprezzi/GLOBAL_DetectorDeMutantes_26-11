@@ -28,13 +28,13 @@ public class MutantController {
     @Operation(
             summary = &quot;Verificar si un ADN es mutante&quot;,
             description = &quot;Recibe una secuencia de ADN y determina si es mutante. &quot; +
-                    &quot;Un humano es mutante si tiene más de una secuencia de 4 letras iguales &quot; +
+                    &quot;Un humano es mutante si tiene mÃ¡s de una secuencia de 4 letras iguales &quot; +
                     &quot;en horizontal, vertical o diagonal.&quot;
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = &quot;200&quot;,
-                    description = &quot;Es mutante - El ADN contiene más de una secuencia de 4 letras iguales&quot;
+                    description = &quot;Es mutante - El ADN contiene mÃ¡s de una secuencia de 4 letras iguales&quot;
             ),
             @ApiResponse(
                     responseCode = &quot;403&quot;,
@@ -42,7 +42,7 @@ public class MutantController {
             ),
             @ApiResponse(
                     responseCode = &quot;400&quot;,
-                    description = &quot;DNA inválido - El ADN no cumple con las validaciones (debe ser matriz cuadrada NxN, mínimo 4x4, solo caracteres A/T/C/G)&quot;
+                    description = &quot;DNA invÃ¡lido - El ADN no cumple con las validaciones (debe ser matriz cuadrada NxN, mÃ­nimo 4x4, solo caracteres A/T/C/G)&quot;
             )
     })
 
@@ -50,31 +50,31 @@ public class MutantController {
     @PostMapping(&quot;/mutant&quot;)
     public ResponseEntity&lt;?&gt; checkMutant(@RequestBody @Valid DnaRequest request) {
         // Llamar al servicio para analizar el DNA
-<span class="fc" id="L53">        boolean isMutant = mutantService.analyzeDna(request.getDna());</span>
+<span class="nc" id="L53">        boolean isMutant = mutantService.analyzeDna(request.getDna());</span>
         
-        // Según CONSIGNAS:
+        // SegÃºn CONSIGNAS:
         // - 200 OK si es mutante
         // - 403 Forbidden si NO es mutante
-<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (isMutant) {</span>
-<span class="fc" id="L59">            return ResponseEntity.ok().build();  // 200 OK - Es mutante</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (isMutant) {</span>
+<span class="nc" id="L59">            return ResponseEntity.ok().build();  // 200 OK - Es mutante</span>
         } else {
-<span class="fc" id="L61">            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();  // 403 Forbidden - No es mutante</span>
+<span class="nc" id="L61">            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();  // 403 Forbidden - No es mutante</span>
         }
     }
 
 
     @Operation(
-            summary = &quot;Obtener estadísticas de ADNs analizados&quot;,
-            description = &quot;Retorna las estadísticas de todos los ADNs analizados: cantidad de mutantes, humanos y el ratio entre ellos.&quot;
+            summary = &quot;Obtener estadÃ­sticas de ADNs analizados&quot;,
+            description = &quot;Retorna las estadÃ­sticas de todos los ADNs analizados: cantidad de mutantes, humanos y el ratio entre ellos.&quot;
     )
     @ApiResponse(
             responseCode = &quot;200&quot;,
-            description = &quot;Estadísticas obtenidas correctamente&quot;
+            description = &quot;EstadÃ­sticas obtenidas correctamente&quot;
     )
     @GetMapping(&quot;/stats&quot;)
     public ResponseEntity&lt;StatsResponse&gt; getStats() {
-<span class="fc" id="L76">        StatsResponse stats = statsService.getStats();</span>
-<span class="fc" id="L77">        return ResponseEntity.ok(stats);</span>
+<span class="nc" id="L76">        StatsResponse stats = statsService.getStats();</span>
+<span class="nc" id="L77">        return ResponseEntity.ok(stats);</span>
     }
 
 

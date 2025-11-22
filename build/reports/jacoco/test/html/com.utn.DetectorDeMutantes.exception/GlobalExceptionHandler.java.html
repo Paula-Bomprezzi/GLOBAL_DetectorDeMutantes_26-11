@@ -12,29 +12,29 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
-<span class="fc" id="L15">public class GlobalExceptionHandler {</span>
+<span class="nc" id="L15">public class GlobalExceptionHandler {</span>
 
- //error en la validación del DTO DNA REQUEST (Dna inválido)
+ //error en la validaciÃ³n del DTO DNA REQUEST (Dna invÃ¡lido)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity&lt;ErrorResponse&gt; handleMethodArgumentNotValidException(
             MethodArgumentNotValidException ex,
             HttpServletRequest request) {
 
-        // Extraer todos los mensajes de error de validación
-<span class="fc" id="L24">        String errorMessages = ex.getBindingResult()</span>
-<span class="fc" id="L25">                .getFieldErrors()</span>
-<span class="fc" id="L26">                .stream()</span>
-<span class="fc" id="L27">                .map(error -&gt; error.getField() + &quot;: &quot; + error.getDefaultMessage())</span>
-<span class="fc" id="L28">                .collect(Collectors.joining(&quot;, &quot;));</span>
+        // Extraer todos los mensajes de error de validaciÃ³n
+<span class="nc" id="L24">        String errorMessages = ex.getBindingResult()</span>
+<span class="nc" id="L25">                .getFieldErrors()</span>
+<span class="nc" id="L26">                .stream()</span>
+<span class="nc" id="L27">                .map(error -&gt; error.getField() + &quot;: &quot; + error.getDefaultMessage())</span>
+<span class="nc" id="L28">                .collect(Collectors.joining(&quot;, &quot;));</span>
 
-<span class="fc" id="L30">        ErrorResponse errorResponse = new ErrorResponse(</span>
-<span class="fc" id="L31">                HttpStatus.BAD_REQUEST.value(),</span>
+<span class="nc" id="L30">        ErrorResponse errorResponse = new ErrorResponse(</span>
+<span class="nc" id="L31">                HttpStatus.BAD_REQUEST.value(),</span>
                 &quot;Bad Request&quot;,
                 &quot;Invalid DNA sequence: &quot; + errorMessages,
-<span class="fc" id="L34">                request.getRequestURI()</span>
+<span class="nc" id="L34">                request.getRequestURI()</span>
         );
 
-<span class="fc" id="L37">        return new ResponseEntity&lt;&gt;(errorResponse, HttpStatus.BAD_REQUEST);</span>
+<span class="nc" id="L37">        return new ResponseEntity&lt;&gt;(errorResponse, HttpStatus.BAD_REQUEST);</span>
     }
 
  //error en validaciones del CONTROLLER
@@ -59,7 +59,7 @@ import java.util.stream.Collectors;
 <span class="nc" id="L59">        return new ResponseEntity&lt;&gt;(errorResponse, HttpStatus.BAD_REQUEST);</span>
     }
 
-   //ERROR EN EL CÁLCULO DEL HASH
+   //ERROR EN EL CÃ�LCULO DEL HASH
 
     @ExceptionHandler(DnaHashCalculationException.class)
     public ResponseEntity&lt;ErrorResponse&gt; handleDnaHashCalculationException(

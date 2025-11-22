@@ -4,120 +4,136 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-<span class="fc" id="L7">public class MutantDetector {</span>
+public class MutantDetector {
 
-    //Defino cuál es el tamaño mínimo
+    // Constructor pÃºblico sin argumentos
+<span class="fc" id="L10">    public MutantDetector() {</span>
+<span class="fc" id="L11">    }</span>
+
+    //Defino cuÃ¡l es el tamaÃ±o mÃ­nimo
     private static final int SEQUENCE_LENGTH = 4;
-    //defino qué caracteres acepto
-<span class="fc" id="L12">    private static final Set&lt;Character&gt; VALID_BASES = Set.of('A', 'T', 'C', 'G');</span>
+    //defino quÃ© caracteres acepto
+<span class="fc" id="L16">    private static final Set&lt;Character&gt; VALID_BASES = Set.of('A', 'T', 'C', 'G');</span>
 
 
-    //MÉTODO
+    //MÃ‰TODO
     public boolean isMutant(String[] dna) {
 
-        //===============================SEGUNDA CAPA DE VALIDACIÓN (primera en el DTO)=======================
-        // Validación inicial
-<span class="fc bfc" id="L20" title="All 4 branches covered.">        if (dna == null || dna.length == 0) {</span>
-<span class="fc" id="L21">            return false;</span>
+        //===============================SEGUNDA CAPA DE VALIDACIÃ“N (primera en el DTO)=======================
+        // ValidaciÃ³n inicial
+<span class="pc bpc" id="L24" title="2 of 4 branches missed.">        if (dna == null || dna.length == 0) {</span>
+<span class="nc" id="L25">            return false;</span>
         }
 
-<span class="fc" id="L24">        final int n = dna.length;</span>
-<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (n &lt; SEQUENCE_LENGTH) {</span>
-<span class="fc" id="L26">            return false;</span>
+<span class="fc" id="L28">        final int n = dna.length;</span>
+<span class="pc bpc" id="L29" title="1 of 2 branches missed.">        if (n &lt; SEQUENCE_LENGTH) {</span>
+<span class="nc" id="L30">            return false;</span>
         }
 
-        // Validar matriz cuadrada y caracteres válidos
-<span class="fc bfc" id="L30" title="All 2 branches covered.">        for (String row : dna) {</span>
-<span class="fc bfc" id="L31" title="All 4 branches covered.">            if (row == null || row.length() != n) {</span>
-<span class="fc" id="L32">                return false;</span>
+        // Validar matriz cuadrada y caracteres vÃ¡lidos
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        for (String row : dna) {</span>
+<span class="pc bpc" id="L35" title="2 of 4 branches missed.">            if (row == null || row.length() != n) {</span>
+<span class="nc" id="L36">                return false;</span>
             }
 
-<span class="fc bfc" id="L35" title="All 2 branches covered.">            for (char c : row.toCharArray()) {</span>
-<span class="fc bfc" id="L36" title="All 2 branches covered.">                if (!VALID_BASES.contains(c)) {</span>
-<span class="fc" id="L37">                    return false;</span>
-                }
-            }
-        }
-
-        // CONVERSIÓN A MATRIZ DE CARACTERES
-<span class="fc" id="L43">        char[][] matrix = new char[n][];</span>
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        for (int i = 0; i &lt; n; i++) {</span>
-<span class="fc" id="L45">            matrix[i] = dna[i].toCharArray();</span>
-        }
-
-        //========================BÚSQUEDA DE SECUENCIAS======================
-
-<span class="fc" id="L50">        int sequenceCount = 0;</span>
-
-<span class="fc bfc" id="L52" title="All 2 branches covered.">        for (int row = 0; row &lt; n; row++) {</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">            for (int col = 0; col &lt; n; col++) {</span>
-
-                // Horizontal
-<span class="fc bfc" id="L56" title="All 2 branches covered.">                if (col &lt;= n - SEQUENCE_LENGTH) {</span>
-<span class="fc bfc" id="L57" title="All 2 branches covered.">                    if (checkHorizontal(matrix, row, col)) {</span>
-<span class="fc" id="L58">                        sequenceCount++;</span>
-<span class="fc bfc" id="L59" title="All 2 branches covered.">                        if (sequenceCount &gt; 1) return true;  // Early termination</span>
-                    }
-                }
-
-                // Vertical
-<span class="fc bfc" id="L64" title="All 2 branches covered.">                if (row &lt;= n - SEQUENCE_LENGTH) {</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">                    if (checkVertical(matrix, row, col)) {</span>
-<span class="fc" id="L66">                        sequenceCount++;</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">                        if (sequenceCount &gt; 1) return true;</span>
-                    }
-                }
-
-                // Diagonal Descendente
-<span class="fc bfc" id="L72" title="All 4 branches covered.">                if (row &lt;= n - SEQUENCE_LENGTH &amp;&amp; col &lt;= n - SEQUENCE_LENGTH) {</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">                    if (checkDiagonalDescending(matrix, row, col)) {</span>
-<span class="fc" id="L74">                        sequenceCount++;</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">                        if (sequenceCount &gt; 1) return true;</span>
-                    }
-                }
-
-                // Diagonal Ascendente
-<span class="fc bfc" id="L80" title="All 4 branches covered.">                if (row &gt;= SEQUENCE_LENGTH - 1 &amp;&amp; col &lt;= n - SEQUENCE_LENGTH) {</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">                    if (checkDiagonalAscending(matrix, row, col)) {</span>
-<span class="nc" id="L82">                        sequenceCount++;</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">                        if (sequenceCount &gt; 1) return true;</span>
-                    }
+<span class="fc bfc" id="L39" title="All 2 branches covered.">            for (char c : row.toCharArray()) {</span>
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">                if (!VALID_BASES.contains(c)) {</span>
+<span class="nc" id="L41">                    return false;</span>
                 }
             }
         }
 
-<span class="fc" id="L89">        return false;  // Solo encontró 0 o 1 secuencia</span>
+        // CONVERSIÃ“N A MATRIZ DE CARACTERES
+<span class="fc" id="L47">        char[][] matrix = new char[n][];</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc" id="L49">            matrix[i] = dna[i].toCharArray();</span>
+        }
+
+        //========================BÃšSQUEDA DE SECUENCIAS======================
+
+<span class="fc" id="L54">        int sequenceCount = 0;</span>
+
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        for (int row = 0; row &lt; n; row++) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            for (int col = 0; col &lt; n; col++) {</span>
+
+                // Horizontal: solo contar si es el inicio de una secuencia (no superpuesta)
+<span class="fc bfc" id="L60" title="All 2 branches covered.">                if (col &lt;= n - SEQUENCE_LENGTH) {</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">                    if (checkHorizontal(matrix, row, col)) {</span>
+                        // Solo contar si es el inicio: col == 0 o el carÃ¡cter anterior es diferente
+<span class="pc bpc" id="L63" title="3 of 4 branches missed.">                        if (col == 0 || matrix[row][col - 1] != matrix[row][col]) {</span>
+<span class="fc" id="L64">                            sequenceCount++;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">                            if (sequenceCount &gt; 1) return true;  // Early termination</span>
+                        }
+                    }
+                }
+
+                // Vertical: solo contar si es el inicio de una secuencia (no superpuesta)
+<span class="fc bfc" id="L71" title="All 2 branches covered.">                if (row &lt;= n - SEQUENCE_LENGTH) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">                    if (checkVertical(matrix, row, col)) {</span>
+                        // Solo contar si es el inicio: row == 0 o el carÃ¡cter anterior es diferente
+<span class="pc bpc" id="L74" title="3 of 4 branches missed.">                        if (row == 0 || matrix[row - 1][col] != matrix[row][col]) {</span>
+<span class="fc" id="L75">                            sequenceCount++;</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">                            if (sequenceCount &gt; 1) return true;</span>
+                        }
+                    }
+                }
+
+                // Diagonal Descendente: solo contar si es el inicio de una secuencia (no superpuesta)
+<span class="fc bfc" id="L82" title="All 4 branches covered.">                if (row &lt;= n - SEQUENCE_LENGTH &amp;&amp; col &lt;= n - SEQUENCE_LENGTH) {</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">                    if (checkDiagonalDescending(matrix, row, col)) {</span>
+                        // Solo contar si es el inicio: row == 0 o col == 0 o el carÃ¡cter diagonal anterior es diferente
+<span class="pc bpc" id="L85" title="5 of 6 branches missed.">                        if ((row == 0 || col == 0) || matrix[row - 1][col - 1] != matrix[row][col]) {</span>
+<span class="fc" id="L86">                            sequenceCount++;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">                            if (sequenceCount &gt; 1) return true;</span>
+                        }
+                    }
+                }
+
+                // Diagonal Ascendente: solo contar si es el inicio de una secuencia (no superpuesta)
+<span class="fc bfc" id="L93" title="All 4 branches covered.">                if (row &gt;= SEQUENCE_LENGTH - 1 &amp;&amp; col &lt;= n - SEQUENCE_LENGTH) {</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">                    if (checkDiagonalAscending(matrix, row, col)) {</span>
+                        // Solo contar si es el inicio: row == n-1 o col == 0 o el carÃ¡cter diagonal anterior es diferente
+<span class="nc bnc" id="L96" title="All 6 branches missed.">                        if ((row == n - 1 || col == 0) || matrix[row + 1][col - 1] != matrix[row][col]) {</span>
+<span class="nc" id="L97">                            sequenceCount++;</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                            if (sequenceCount &gt; 1) return true;</span>
+                        }
+                    }
+                }
+            }
+        }
+
+<span class="fc" id="L105">        return false;  // Solo encontrÃ³ 0 o 1 secuencia</span>
     }
 
-    //=====================================================MÉTODOS PARA VERIFICAR CADENAS DE 4 CARACTERES ===============================
+    //=====================================================MÃ‰TODOS PARA VERIFICAR CADENAS DE 4 CARACTERES ===============================
     //Siempre misma fila, me desplazo por las columnas
     private boolean checkHorizontal(char[][] matrix, int row, int col) {
-<span class="fc" id="L95">        final char base = matrix[row][col];</span>
-<span class="fc bfc" id="L96" title="All 6 branches covered.">        return matrix[row][col + 1] == base &amp;&amp;</span>
+<span class="fc" id="L111">        final char base = matrix[row][col];</span>
+<span class="fc bfc" id="L112" title="All 6 branches covered.">        return matrix[row][col + 1] == base &amp;&amp;</span>
                 matrix[row][col + 2] == base &amp;&amp;
                 matrix[row][col + 3] == base;
     }
 
     //Cambio de fila, siempre en la misma columna
     private boolean checkVertical(char[][] matrix, int row, int col) {
-<span class="fc" id="L103">        final char base = matrix[row][col];</span>
-<span class="pc bpc" id="L104" title="1 of 6 branches missed.">        return matrix[row + 1][col] == base &amp;&amp;</span>
+<span class="fc" id="L119">        final char base = matrix[row][col];</span>
+<span class="fc bfc" id="L120" title="All 6 branches covered.">        return matrix[row + 1][col] == base &amp;&amp;</span>
                 matrix[row + 2][col] == base &amp;&amp;
                 matrix[row + 3][col] == base;
     }
 
     //Me desplazo de fila y columna
     private boolean checkDiagonalDescending(char[][] matrix, int row, int col) {
-<span class="fc" id="L111">        final char base = matrix[row][col];</span>
-<span class="fc bfc" id="L112" title="All 6 branches covered.">        return matrix[row + 1][col + 1] == base &amp;&amp;</span>
+<span class="fc" id="L127">        final char base = matrix[row][col];</span>
+<span class="fc bfc" id="L128" title="All 6 branches covered.">        return matrix[row + 1][col + 1] == base &amp;&amp;</span>
                 matrix[row + 2][col + 2] == base &amp;&amp;
                 matrix[row + 3][col + 3] == base;
     }
 
     // Resto filas para subir, me desplazo a la derecha
     private boolean checkDiagonalAscending(char[][] matrix, int row, int col) {
-<span class="fc" id="L119">        final char base = matrix[row][col];</span>
-<span class="pc bpc" id="L120" title="3 of 6 branches missed.">        return matrix[row - 1][col + 1] == base &amp;&amp;</span>
+<span class="fc" id="L135">        final char base = matrix[row][col];</span>
+<span class="pc bpc" id="L136" title="2 of 6 branches missed.">        return matrix[row - 1][col + 1] == base &amp;&amp;</span>
                 matrix[row - 2][col + 2] == base &amp;&amp;
                 matrix[row - 3][col + 3] == base;
     }

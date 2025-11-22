@@ -7,9 +7,9 @@ public class MapperService {
 
     private final ModelMapper modelMapper;
 
-<span class="fc" id="L10">    public MapperService(ModelMapper modelMapper) {</span>
-<span class="fc" id="L11">        this.modelMapper = modelMapper;</span>
-<span class="fc" id="L12">    }</span>
+<span class="nc" id="L10">    public MapperService(ModelMapper modelMapper) {</span>
+<span class="nc" id="L11">        this.modelMapper = modelMapper;</span>
+<span class="nc" id="L12">    }</span>
 
     public &lt;D, T&gt; D convertir(T origen, Class&lt;D&gt; destinoClass) {
 <span class="nc" id="L15">        return modelMapper.map(origen, destinoClass);</span>

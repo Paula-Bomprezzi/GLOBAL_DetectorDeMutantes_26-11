@@ -5,48 +5,48 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.Set;
 
-<span class="fc" id="L8">public class ValidDnaSequenceValidator implements ConstraintValidator&lt;ValidDnaSequence, String[]&gt; {</span>
-<span class="fc" id="L9">    private static final Set&lt;Character&gt; VALID_BASES = Set.of('A', 'T', 'C', 'G');</span>
+<span class="nc" id="L8">public class ValidDnaSequenceValidator implements ConstraintValidator&lt;ValidDnaSequence, String[]&gt; {</span>
+<span class="nc" id="L9">    private static final Set&lt;Character&gt; VALID_BASES = Set.of('A', 'T', 'C', 'G');</span>
     private static final int MIN_SIZE = 4;
 
     @Override
     public boolean isValid(String[] dna, ConstraintValidatorContext context) {
-        // 1. Validar que dna no sea null o vacío
-<span class="fc bfc" id="L15" title="All 4 branches covered.">        if (dna == null || dna.length == 0) {</span>
-<span class="fc" id="L16">            return false;</span>
+        // 1. Validar que dna no sea null o vacÃ­o
+<span class="nc bnc" id="L15" title="All 4 branches missed.">        if (dna == null || dna.length == 0) {</span>
+<span class="nc" id="L16">            return false;</span>
         }
 
-<span class="fc" id="L19">        final int n = dna.length;</span>
+<span class="nc" id="L19">        final int n = dna.length;</span>
 
-        // 2. Validar tamaño mínimo 4x4
-<span class="pc bpc" id="L22" title="1 of 2 branches missed.">        if (n &lt; MIN_SIZE) {</span>
+        // 2. Validar tamaÃ±o mÃ­nimo 4x4
+<span class="nc bnc" id="L22" title="All 2 branches missed.">        if (n &lt; MIN_SIZE) {</span>
 <span class="nc" id="L23">            return false;</span>
         }
 
         // 3. Validar que sea matriz cuadrada NxN y que ninguna fila sea null
-<span class="fc bfc" id="L27" title="All 2 branches covered.">        for (String row : dna) {</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        for (String row : dna) {</span>
             // Validar que ninguna fila sea null
-<span class="pc bpc" id="L29" title="1 of 2 branches missed.">            if (row == null) {</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">            if (row == null) {</span>
 <span class="nc" id="L30">                return false;</span>
             }
             
             // Validar que todas las filas tengan el mismo largo (matriz cuadrada)
-<span class="fc bfc" id="L34" title="All 2 branches covered.">            if (row.length() != n) {</span>
-<span class="fc" id="L35">                return false;</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">            if (row.length() != n) {</span>
+<span class="nc" id="L35">                return false;</span>
             }
         }
 
         // 4. Validar que solo contenga caracteres A, T, C, G (usando Set para O(1))
-<span class="fc bfc" id="L40" title="All 2 branches covered.">        for (String row : dna) {</span>
-<span class="fc bfc" id="L41" title="All 2 branches covered.">            for (char c : row.toCharArray()) {</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">                if (!VALID_BASES.contains(c)) {</span>
-<span class="fc" id="L43">                    return false;</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        for (String row : dna) {</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">            for (char c : row.toCharArray()) {</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">                if (!VALID_BASES.contains(c)) {</span>
+<span class="nc" id="L43">                    return false;</span>
                 }
             }
         }
 
         // Todas las validaciones pasaron
-<span class="fc" id="L49">        return true;</span>
+<span class="nc" id="L49">        return true;</span>
     }
 }
 

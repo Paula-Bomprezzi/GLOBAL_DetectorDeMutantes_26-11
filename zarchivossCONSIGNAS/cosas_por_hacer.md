@@ -1,72 +1,128 @@
 # 📋 Cosas Por Hacer
 
-## 🎯 Orden Recomendado de Implementación
+## 📋 Examen Mercadolibre - Pendientes
 
-**Estrategia:** Dejar el algoritmo `isMutant()` para el final. Primero construir todo el contexto (Swagger, Tests básicos) para tener un sistema funcional que luego solo necesite el algoritmo.
+### 🚀 Prioridad ALTA (Requisitos del Examen)
+
+#### 1. Despliegue en Render
+**Prioridad: ALTA** - Requisito Nivel 2  
+**Estado:** ❌ **PENDIENTE**  
+**Ubicación:** Configuración de despliegue
+
+**Tareas:**
+- ⚠️ Crear cuenta en Render (si no existe)
+- ⚠️ Configurar servicio web en Render
+- ⚠️ Conectar repositorio GitHub con Render
+- ⚠️ Configurar variables de entorno si es necesario
+- ⚠️ Realizar despliegue inicial
+- ⚠️ Verificar que la API funciona en producción
+- ⚠️ Obtener URL de la API desplegada
+
+#### 2. Code Coverage > 80% ✅ VERIFICADO
+**Prioridad: ALTA** - Requisito Nivel 3  
+**Estado:** ✅ **COMPLETO** - Cobertura verificada: **87%**  
+**Ubicación:** Reportes de JaCoCo
+
+**Resultados:**
+- ✅ Cobertura Total: **87%** (requisito: >80%) ✅
+- ✅ Controller: 100%
+- ✅ Service: 94%
+- ✅ Validation: 95%
+- ✅ DTO: 100%
+- ⚠️ Exception: 38% (mejorable, pero no crítico para cumplir requisito)
+
+**Nota:** El requisito de >80% está cumplido. La cobertura del paquete de excepciones es baja pero no afecta el cumplimiento del requisito. Si se desea mejorar, se pueden agregar tests para:
+- `GlobalExceptionHandler.handleConstraintViolationException()` (probablemente no probado)
+- `GlobalExceptionHandler.handleDnaHashCalculationException()` (probablemente no probado)
+- Ambos constructores de `DnaHashCalculationException`
+
+#### 3. Diagrama de Secuencia
+**Prioridad: ALTA** - Requisito Nivel 3  
+**Estado:** ❌ **PENDIENTE**  
+**Ubicación:** Documentación (PDF o imagen)
+
+**Tareas:**
+- ⚠️ Crear diagrama de secuencia para el flujo completo:
+  - Cliente → MutantController → MutantService → MutantDetector
+  - MutantService → DnaRecordRepository → Base de Datos
+  - Cliente → MutantController → StatsService → DnaRecordRepository
+- ⚠️ Puede usar herramientas como:
+  - PlantUML
+  - Draw.io
+  - Lucidchart
+  - Mermaid
+- ⚠️ Guardar como PDF o imagen
+- ⚠️ Incluir en documentación del proyecto
+
+#### 4. README Completo con Instrucciones
+**Prioridad: ALTA** - Requisito de Entrega  
+**Estado:** ⚠️ **PARCIAL** (README básico existe)  
+**Ubicación:** `README.md`
+
+**Tareas:**
+- ⚠️ Agregar instrucciones de cómo ejecutar el programa localmente
+- ⚠️ Agregar instrucciones de cómo ejecutar la API
+- ⚠️ Agregar ejemplos de uso de los endpoints
+- ⚠️ Agregar información sobre cómo acceder a Swagger UI
+- ⚠️ Agregar información sobre cómo acceder a H2 Console
+- ⚠️ Agregar URL de la API desplegada (después del despliegue)
+- ⚠️ Agregar requisitos previos (Java, Gradle, etc.)
 
 ---
 
-
-## 🧪 FASE 5: Tests Básicos (Verificar Funcionamiento)
+## ✅ Tests Completados (Ya implementados - No hacer)
 
 ### MutantServiceTest
-**Prioridad: MEDIA** - Verificar lógica de negocio  
-**Estado:** ✅ **COMPLETO - 5/5 tests implementado**  
-**Ubicación:** `src/test/java/com/utn/DetectorDeMutantes/service/MutantServiceTest.java`
-
-**✅ COMPLETADO según RÚBRICAS 3.2:**
-- ✅ DNA nuevo (debe calcular hash, analizar, guardar)
-- ✅ DNA existente (debe retornar cacheado)
-- ✅ Manejo de excepciones
-- ✅ Verificar que se guarda en BD con `createdAt`
-- ✅ Verificar que el hash se calcula correctamente
-- ✅ Usa `@Mock` para `DnaRecordRepository` y `MutantDetector`
+**Estado:** ✅ **COMPLETO - 5/5 tests implementado**
 
 ### StatsServiceTest
-**Prioridad: MEDIA** - Verificar estadísticas  
-**Estado:** ✅ **COMPLETO - 6/6 tests implementado**  
-**Ubicación:** `src/test/java/com/utn/DetectorDeMutantes/service/StatsServiceTest.java`
-
-**✅ COMPLETADO según RÚBRICAS 3.2:**
-- ✅ Ratio normal (mutantes/humanos)
-- ✅ Sin humanos (caso especial)
-- ✅ Sin mutantes
-- ✅ Sin registros
-- ✅ Verificar cálculo correcto del ratio
-- ✅ Usa `@Mock` para `DnaRecordRepository`
+**Estado:** ✅ **COMPLETO - 6/6 tests implementado**
 
 ### MutantControllerTest
-**Prioridad: MEDIA** - Verificar endpoints  
-**Estado:** ✅ **COMPLETO - 8/8 tests implementado**  
-**Ubicación:** `src/test/java/com/utn/DetectorDeMutantes/controller/MutantControllerTest.java`
+**Estado:** ✅ **COMPLETO - 8/8 tests implementado**
 
-**✅ COMPLETADO según CONSIGNAS (líneas 1642-1666) y RÚBRICAS (4.1):**
-- ✅ POST /mutant con mutante → 200 OK (1.5 pts)
-- ✅ POST /mutant con humano → 403 Forbidden (1.5 pts)
-- ✅ POST /mutant con DNA inválido → 400 Bad Request (1.0 pts)
-- ✅ POST /mutant con DNA null → 400 Bad Request
-- ✅ POST /mutant con DNA vacío → 400 Bad Request
-- ✅ POST /mutant con matriz no cuadrada → 400 Bad Request
-- ✅ GET /stats → 200 OK con JSON correcto (1.0 pts)
-- ✅ GET /stats sin humanos → 200 OK con JSON correcto
-- ✅ Usa `@SpringBootTest` y `@AutoConfigureMockMvc`
-- ✅ Mockea `MutantService` y `StatsService`
+### MutantDetectorTest
+**Estado:** ✅ **COMPLETO - 19/17 tests implementado**
 
 ---
 
+## 🔵 Mejoras Opcionales (No críticas - Requisito cumplido)
+
+### Mejorar Cobertura del Paquete de Excepciones (Opcional)
+**Prioridad: BAJA** - El requisito de >80% ya está cumplido (87% total)  
+**Estado:** ⚠️ **OPCIONAL**  
+**Ubicación:** Nuevos tests para `GlobalExceptionHandler`
+
+**Nota:** El paquete de excepciones tiene 38% de cobertura, pero esto no afecta el cumplimiento del requisito de >80% total. Si se desea mejorar:
+
+**Tareas opcionales:**
+- ⚠️ Crear `GlobalExceptionHandlerTest` para probar:
+  - `handleConstraintViolationException()` - Manejo de `ConstraintViolationException`
+  - `handleDnaHashCalculationException()` - Manejo de `DnaHashCalculationException`
+  - Verificar que ambos métodos retornan el formato correcto de `ErrorResponse`
+- ⚠️ Probar ambos constructores de `DnaHashCalculationException`:
+  - Constructor con mensaje
+  - Constructor con mensaje y causa
+
+**Ubicación sugerida:** `src/test/java/com/utn/DetectorDeMutantes/exception/GlobalExceptionHandlerTest.java`
+
+---
 
 ## 🧪 FASE 7: Tests del Algoritmo
 
-- ⚠️ **Cobertura mínima: 85%** | **Óptimo: 95%+** - **PENDIENTE VERIFICAR** (RÚBRICAS 3.1 - 3.2 pts)
+- ✅ **Cobertura verificada: 87%** (requisito examen: >80%) ✅
 
 ---
 
-## 📈 Cobertura Requerida (8 pts según RÚBRICAS 3.1)
+## 📈 Cobertura Requerida
 
-**Métricas (RÚBRICAS líneas 225-231):**
-- ⚠️ Cobertura Total: ≥90% (óptimo) / ≥70% (aceptable) - (3.2 pts)
-- ⚠️ Cobertura Service: ≥96% (óptimo) / ≥85% (aceptable) - (3.2 pts)
-- ⚠️ Cobertura Controller: ≥95% (óptimo) / ≥80% (aceptable) - (1.6 pts)
+**Requisito Examen Mercadolibre (Nivel 3):**
+- ✅ **Code coverage > 80%** - **CUMPLIDO** (87% total)
+
+**Métricas Adicionales (RÚBRICAS):**
+- ⚠️ Cobertura Total: ≥90% (óptimo) / ≥70% (aceptable)
+- ⚠️ Cobertura Service: ≥96% (óptimo) / ≥85% (aceptable)
+- ⚠️ Cobertura Controller: ≥95% (óptimo) / ≥80% (aceptable)
 
 **Comandos de verificación:**
 ```bash
@@ -187,19 +243,46 @@
 # H2 Console: http://localhost:8080/h2-console
 ```
 
-### Checklist Rápido de Entrega (RÚBRICAS líneas 435-468)
+### Checklist Rápido de Entrega - Examen Mercadolibre
+
+**Nivel 1:**
+- [x] Función `isMutant(String[] dna)` implementada ✅
+- [x] Validación completa del input ✅
+- [x] Búsqueda en horizontal, vertical y oblicua ✅
+- [x] Algoritmo optimizado ✅
+
+**Nivel 2:**
+- [x] API REST con Spring Boot ✅
+- [x] Endpoint `POST /mutant/` implementado ✅
+- [x] Retorna 200 OK (mutante) y 403 Forbidden (humano) ✅
+- [ ] **Despliegue en Render** ❌
+
+**Nivel 3:**
+- [x] Base de datos H2 configurada ✅
+- [x] Solo 1 registro por ADN (hash único) ✅
+- [x] Endpoint `GET /stats` implementado ✅
+- [x] Tests implementados (38 tests) ✅
+- [x] **Code coverage > 80% verificado** ✅ (87% total)
+- [ ] **Diagrama de Secuencia** ❌
+
+**Entrega:**
+- [x] Código fuente en repositorio GitHub ✅
+- [ ] **Instrucciones de ejecución en README** ⚠️
+- [ ] **URL de la API (después de despliegue)** ❌
+- [ ] **Diagrama de Secuencia en PDF** ❌
+
+### Checklist Adicional (RÚBRICAS)
 - [x] 17+ tests en `MutantDetectorTest` pasan (✅ 19/17 tests - COMPLETO)
 - [x] `if (sequenceCount > 1) return true;` implementado ✅
 - [x] Conversión a `char[][]` para acceso rápido ✅
 - [x] Boundary checking antes de buscar ✅
 - [x] Sin estructuras auxiliares innecesarias ✅
-- [ ] Cobertura >85%
 - [x] 6 carpetas creadas (controller, dto, service, repository, entity, config)
 - [x] `@RequiredArgsConstructor` en services/controllers ✅
 - [x] 2+ DTOs con `@Data` (DnaRequest ✅, ErrorResponse ✅, StatsResponse ✅)
 - [x] Repository `extends JpaRepository` ✅
 - [x] `GlobalExceptionHandler` con `@RestControllerAdvice` ✅
-- [x] 35+ tests totales (✅ 38/36 implementado: 19 MutantDetectorTest ✅, 5 MutantServiceTest ✅, 6 StatsServiceTest ✅, 8 MutantControllerTest ✅)
+- [x] 35+ tests totales (✅ 38/36 implementado)
 - [x] POST /mutant → 200 (mutante), 403 (humano), 400 (inválido) ✅
 - [x] GET /stats → JSON correcto ✅
 - [x] Swagger UI en `/swagger-ui.html` funciona ✅

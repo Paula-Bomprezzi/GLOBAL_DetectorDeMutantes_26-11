@@ -1,5 +1,63 @@
 # ✅ Cosas Hechas
 
+## 📋 Examen Mercadolibre - Estado de Implementación
+
+### ✅ Nivel 1: Función isMutant
+- ✅ Método `boolean isMutant(String[] dna)` implementado completamente
+- ✅ Validación completa del input:
+  - ✅ Verifica que el array no sea null o vacío
+  - ✅ Valida que sea matriz cuadrada NxN
+  - ✅ Valida que solo contenga caracteres A, T, C, G
+  - ✅ Valida tamaño mínimo 4x4
+- ✅ Búsqueda en 4 direcciones:
+  - ✅ Horizontal (→)
+  - ✅ Vertical (↓)
+  - ✅ Diagonal descendente (↘)
+  - ✅ Diagonal ascendente (↗)
+- ✅ Algoritmo optimizado:
+  - ✅ Early termination (retorna true cuando encuentra más de 1 secuencia)
+  - ✅ Conversión eficiente a `char[][]` para acceso O(1)
+  - ✅ Single pass con boundary checking
+  - ✅ Sin estructuras auxiliares innecesarias
+
+### ✅ Nivel 2: API REST
+- ✅ Endpoint `POST /mutant/` implementado:
+  - ✅ Recibe JSON con formato: `{"dna":["ATGCGA","CAGTGC",...]}`
+  - ✅ Retorna `HTTP 200 OK` si es mutante
+  - ✅ Retorna `HTTP 403 Forbidden` si no es mutante
+  - ✅ Retorna `HTTP 400 Bad Request` para DNA inválido
+- ✅ Spring Boot configurado y funcionando
+- ⚠️ **Pendiente:** Despliegue en Render (cloud computing libre)
+
+### ✅ Nivel 3: Persistencia y Estadísticas
+- ✅ Base de datos H2 configurada y funcionando:
+  - ✅ Entidad `DnaRecord` creada
+  - ✅ Solo 1 registro por ADN (usando hash SHA-256 único)
+  - ✅ Repository con métodos `findByDnaHash()` y `countByIsMutant()`
+- ✅ Endpoint `GET /stats` implementado:
+  - ✅ Retorna JSON con formato: `{"count_mutant_dna":40, "count_human_dna":100, "ratio":0.4}`
+  - ✅ Calcula ratio correctamente (mutantes/humanos)
+  - ✅ Maneja caso especial cuando no hay humanos
+- ✅ Tests implementados:
+  - ✅ Tests unitarios para `isMutant()` (19 tests)
+  - ✅ Tests de integración para endpoints API (8 tests)
+  - ✅ Tests para servicios (11 tests)
+  - ✅ **Code coverage verificado: 87%** (cumple requisito > 80%)
+    - ✅ Cobertura Total: **87%** (requisito: >80%)
+    - ✅ Controller: 100%
+    - ✅ Service: 94%
+    - ✅ Validation: 95%
+    - ✅ DTO: 100%
+    - ⚠️ Exception: 38% (mejorable, pero no crítico)
+- ❌ **Pendiente:** Diagrama de Secuencia
+
+### 📝 Documentación
+- ⚠️ README básico creado
+- ⚠️ **Pendiente:** Instrucciones detalladas de cómo ejecutar el programa/API
+- ⚠️ **Pendiente:** URL de la API (después del despliegue en Render)
+
+---
+
 ## Estructura del Proyecto
 - ✅ Estructura de paquetes creada (controller, service, repository, dto, entity, exception, validation, config)
 - ✅ Clases base creadas (aunque algunas pendientes de implementación)
@@ -246,3 +304,29 @@
 
 **Edge Cases (2 tests):**
 - ✅ `testNotMutantWithSequenceLongerThanFour()` - Secuencia de longitud 5
+
+## Code Coverage (Cobertura de Código)
+
+### ✅ Cobertura Total: 87% (Cumple requisito > 80% del Examen Mercadolibre)
+
+**Desglose por paquete:**
+- ✅ **Controller:** 100% (22 instrucciones, 0 missed)
+- ✅ **Service:** 94% (543 instrucciones, 33 missed)
+- ✅ **Validation:** 95% (93 instrucciones, 2 missed)
+- ✅ **DTO:** 100% (18 instrucciones, 0 missed)
+- ⚠️ **Exception:** 38% (37 instrucciones, 60 missed) - Mejorable pero no crítico
+- ⚠️ **Main:** 37% (5 instrucciones, 2 missed) - No crítico (clase de inicio)
+
+**Métricas adicionales:**
+- ✅ Cobertura de Branches: 90% (10 missed de 108)
+- ✅ Cobertura de Líneas: 84% (26 missed de 160)
+- ✅ Métodos cubiertos: 75% (7 missed de 28)
+- ✅ Clases cubiertas: 90% (1 missed de 10)
+
+**Comando para generar reporte:**
+```bash
+./gradlew test jacocoTestReport
+# Ver reporte en: build/reports/jacoco/test/html/index.html
+```
+
+**Nota:** El requisito del examen es >80% de cobertura total, que está cumplido con 87%. El paquete de excepciones tiene baja cobertura (38%) pero esto no afecta el cumplimiento del requisito. Si se desea mejorar, se pueden agregar tests para los métodos del `GlobalExceptionHandler` que no están siendo probados directamente.

@@ -25,29 +25,29 @@ public class MutantService {
     private String calculateDnaHash(String[] dna) {
         try {
             // 1. Concatenar todas las filas del DNA sin separadores
-<span class="fc" id="L28">            StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L29" title="All 2 branches covered.">            for (String row : dna) {</span>
-<span class="fc" id="L30">                sb.append(row);</span>
+<span class="nc" id="L28">            StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">            for (String row : dna) {</span>
+<span class="nc" id="L30">                sb.append(row);</span>
             }
-<span class="fc" id="L32">            String concatenatedDna = sb.toString();</span>
+<span class="nc" id="L32">            String concatenatedDna = sb.toString();</span>
 
             // 2. Obtener instancia de MessageDigest con SHA-256
-<span class="fc" id="L35">            MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);</span>
+<span class="nc" id="L35">            MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);</span>
 
             // 3. Calcular el hash (devuelve bytes)
-<span class="fc" id="L38">            byte[] hashBytes = digest.digest(concatenatedDna.getBytes());</span>
+<span class="nc" id="L38">            byte[] hashBytes = digest.digest(concatenatedDna.getBytes());</span>
 
             // 4. Convertir bytes a hexadecimal (64 caracteres)
-<span class="fc" id="L41">            StringBuilder hexString = new StringBuilder();</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">            for (byte b : hashBytes) {</span>
-<span class="fc" id="L43">                String hex = Integer.toHexString(0xff &amp; b);</span>
-<span class="fc bfc" id="L44" title="All 2 branches covered.">                if (hex.length() == 1) {</span>
-<span class="fc" id="L45">                    hexString.append('0'); // Asegurar 2 dígitos por byte</span>
+<span class="nc" id="L41">            StringBuilder hexString = new StringBuilder();</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">            for (byte b : hashBytes) {</span>
+<span class="nc" id="L43">                String hex = Integer.toHexString(0xff &amp; b);</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">                if (hex.length() == 1) {</span>
+<span class="nc" id="L45">                    hexString.append('0'); // Asegurar 2 dÃ­gitos por byte</span>
                 }
-<span class="fc" id="L47">                hexString.append(hex);</span>
+<span class="nc" id="L47">                hexString.append(hex);</span>
             }
 
-<span class="fc" id="L50">            return hexString.toString(); // Retorna String de 64 caracteres hexadecimales</span>
+<span class="nc" id="L50">            return hexString.toString(); // Retorna String de 64 caracteres hexadecimales</span>
 
 <span class="nc" id="L52">        } catch (NoSuchAlgorithmException e) {</span>
 <span class="nc" id="L53">            throw new DnaHashCalculationException(</span>
@@ -56,28 +56,28 @@ public class MutantService {
     }
 
     public boolean analyzeDna( String[] dna){
-<span class="fc" id="L59">        String hash = calculateDnaHash(dna);</span>
-<span class="fc" id="L60">        Optional&lt;DnaRecord&gt; dnaBuscado = repo.findByDnaHash(hash);</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">        if(dnaBuscado.isPresent()){</span>
-<span class="fc" id="L62">            boolean isMutant = dnaBuscado.get().getIsMutant();</span>
-<span class="fc" id="L63">            System.out.println(&quot;=========================RESULTADOS=========================&quot;);</span>
-<span class="fc" id="L64">            System.out.println(&quot;El ADN ingresado dice que el sujeto...&quot;);</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">            System.out.println( isMutant ? &quot;ES MUTANTE!!&quot; : &quot;No es mutante&quot;);</span>
-<span class="fc" id="L66">            return isMutant;</span>
+<span class="nc" id="L59">        String hash = calculateDnaHash(dna);</span>
+<span class="nc" id="L60">        Optional&lt;DnaRecord&gt; dnaBuscado = repo.findByDnaHash(hash);</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if(dnaBuscado.isPresent()){</span>
+<span class="nc" id="L62">            boolean isMutant = dnaBuscado.get().getIsMutant();</span>
+<span class="nc" id="L63">            System.out.println(&quot;=========================RESULTADOS=========================&quot;);</span>
+<span class="nc" id="L64">            System.out.println(&quot;El ADN ingresado dice que el sujeto...&quot;);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">            System.out.println( isMutant ? &quot;ES MUTANTE!!&quot; : &quot;No es mutante&quot;);</span>
+<span class="nc" id="L66">            return isMutant;</span>
     } else{
-<span class="fc" id="L68">            System.out.println(&quot;ANALIZANDO.......&quot;);</span>
-<span class="fc" id="L69">            boolean isMutant = mutantDetector.isMutant(dna);</span>
-<span class="fc" id="L70">            DnaRecord dnaAnalizado = DnaRecord.builder()</span>
-<span class="fc" id="L71">                    .dnaHash(hash)</span>
-<span class="fc" id="L72">                    .isMutant(isMutant)</span>
-<span class="fc" id="L73">                    .createdAt(new Timestamp(System.currentTimeMillis()))</span>
-<span class="fc" id="L74">                    .build();</span>
-<span class="fc" id="L75">            repo.save(dnaAnalizado);</span>
-<span class="fc" id="L76">            System.out.println(&quot;ANÁLISIS CONCLUIDO&quot;);</span>
-<span class="fc" id="L77">            System.out.println(&quot;=========================RESULTADOS=========================&quot;);</span>
-<span class="fc" id="L78">            System.out.println(&quot;El ADN ingresado dice que el sujeto...&quot;);</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">            System.out.println( isMutant ? &quot;ES MUTANTE!!&quot; : &quot;No es mutante&quot;);</span>
-<span class="fc" id="L80">            return isMutant;</span>
+<span class="nc" id="L68">            System.out.println(&quot;ANALIZANDO.......&quot;);</span>
+<span class="nc" id="L69">            boolean isMutant = mutantDetector.isMutant(dna);</span>
+<span class="nc" id="L70">            DnaRecord dnaAnalizado = DnaRecord.builder()</span>
+<span class="nc" id="L71">                    .dnaHash(hash)</span>
+<span class="nc" id="L72">                    .isMutant(isMutant)</span>
+<span class="nc" id="L73">                    .createdAt(new Timestamp(System.currentTimeMillis()))</span>
+<span class="nc" id="L74">                    .build();</span>
+<span class="nc" id="L75">            repo.save(dnaAnalizado);</span>
+<span class="nc" id="L76">            System.out.println(&quot;ANÃ�LISIS CONCLUIDO&quot;);</span>
+<span class="nc" id="L77">            System.out.println(&quot;=========================RESULTADOS=========================&quot;);</span>
+<span class="nc" id="L78">            System.out.println(&quot;El ADN ingresado dice que el sujeto...&quot;);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">            System.out.println( isMutant ? &quot;ES MUTANTE!!&quot; : &quot;No es mutante&quot;);</span>
+<span class="nc" id="L80">            return isMutant;</span>
         }
     };
 }

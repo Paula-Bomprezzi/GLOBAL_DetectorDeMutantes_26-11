@@ -24,8 +24,8 @@ public class MutantDetectorTest {
         assertTrue(detector.isMutant(new String[] {
                 "ATGCGA",
                 "CAGTGC",
-                "TTATGT",
-                "AGAAGG",  // Diagonal ↘: A-A-A-A
+                "TTATTT",
+                "AGAAGG",  // Diagonal: A-A-A-A
                 "CCCCTA",  // Horizontal: C-C-C-C
                 "TCACTG"
         }));
@@ -62,14 +62,13 @@ public class MutantDetectorTest {
     @Test
     @DisplayName("Mutante con diagonales ascendentes y descendentes")
     public void testMutantWithBothDiagonals() {
-        // Diagonal descendente desde (0,0): A-A-A-A y diagonal descendente desde (1,0): G-G-G-G
         assertTrue(detector.isMutant(new String[] {
                 "ATGCGA",
                 "GAGTGC",
-                "TGGTGT",
-                "AGGGGG",
+                "GGATCT",
+                "AGGAGG",
                 "CCGCTA",
-                "TCACTG"
+                "TCAGTG"
         }));
     }
 
@@ -108,13 +107,13 @@ public class MutantDetectorTest {
     @Test
     @DisplayName("Mutante con diagonal en esquina")
     public void testMutantDiagonalInCorner() {
-        // Diagonal en esquina superior izquierda y otra secuencia
+        //Comparten la A inicial
         assertTrue(detector.isMutant(new String[] {
-                "AAAAAA",
+                "AAAATA",
                 "CAGTGC",
                 "TTATGT",
                 "AGAAGG",
-                "CCCCTA",
+                "CCGCTA",
                 "TCACTG"
         }));
     }
@@ -123,11 +122,11 @@ public class MutantDetectorTest {
 
     @Test
     @DisplayName("Humano con solo una secuencia")
-    public void testNotMutantWithOnlyOneSequence() {
+    public void testOneSequence() {
         // Solo una secuencia horizontal (TTTT en fila 2) - ejemplo de CONSIGNAS
         assertFalse(detector.isMutant(new String[] {
                 "ATGCGA",
-                "CAGTGC",
+                "CTTTTC",
                 "TTATTT",  // Solo una secuencia: T-T-T-T
                 "AGACGG",
                 "GCGTCA",
@@ -137,7 +136,7 @@ public class MutantDetectorTest {
 
     @Test
     @DisplayName("Humano sin secuencias")
-    public void testNotMutantWithNoSequences() {
+    public void testNoSequence() {
         // Sin secuencias de 4 iguales - ejemplo de CONSIGNAS
         assertFalse(detector.isMutant(new String[] {
                 "ATGC",
@@ -148,9 +147,9 @@ public class MutantDetectorTest {
     }
 
     @Test
-    @DisplayName("Humano con matriz pequeña 4x4 sin secuencias")
-    public void testNotMutantSmallDna() {
-        // Matriz 4x4 sin secuencias
+    @DisplayName("Humano con matriz pequeña 4x4 con una secuencia")
+    public void testHumanWithSmallDna() {
+        // Matriz 4x4 con una secuencia
         assertFalse(detector.isMutant(new String[] {
                 "ATGC",
                 "CAGT",
@@ -163,19 +162,19 @@ public class MutantDetectorTest {
 
     @Test
     @DisplayName("Validación: DNA null")
-    public void testNotMutantWithNullDna() {
+    public void testNullDna() {
         assertFalse(detector.isMutant(null));
     }
 
     @Test
     @DisplayName("Validación: Array vacío")
-    public void testNotMutantWithEmptyDna() {
+    public void testEmptyDna() {
         assertFalse(detector.isMutant(new String[] {}));
     }
 
     @Test
     @DisplayName("Validación: Matriz no cuadrada")
-    public void testNotMutantWithNonSquareDna() {
+    public void testNonSquareMatrix() {
         // Matriz 4x5 (no cuadrada)
         assertFalse(detector.isMutant(new String[] {
                 "ATGCG",
@@ -187,7 +186,7 @@ public class MutantDetectorTest {
 
     @Test
     @DisplayName("Validación: Caracteres inválidos")
-    public void testNotMutantWithInvalidCharacters() {
+    public void testInvalidDna() {
         // Contiene 'X' que no es válido
         assertFalse(detector.isMutant(new String[] {
                 "ATGCGA",
@@ -201,7 +200,7 @@ public class MutantDetectorTest {
 
     @Test
     @DisplayName("Validación: Fila null")
-    public void testNotMutantWithNullRow() {
+    public void testNullRow() {
         // Una fila es null
         assertFalse(detector.isMutant(new String[] {
                 "ATGCGA",
@@ -215,7 +214,7 @@ public class MutantDetectorTest {
 
     @Test
     @DisplayName("Validación: Matriz muy pequeña")
-    public void testNotMutantWithTooSmallDna() {
+    public void testTooSmallMatrix() {
         // Matriz 3x3 (menor que 4x4)
         assertFalse(detector.isMutant(new String[] {
                 "ATG",
@@ -228,13 +227,12 @@ public class MutantDetectorTest {
 
     @Test
     @DisplayName("Edge case: Secuencia de longitud 5 no debe contar")
-    public void testNotMutantWithSequenceLongerThanFour() {
+    public void testSequenceLongerThanFourShouldNotCount() {
         // Tiene 5 A's consecutivos pero solo cuenta como 1 secuencia
-        // Necesitamos otra secuencia para que sea mutante
         assertFalse(detector.isMutant(new String[] {
-                "AAAAA",
+                "AAAAAG",
                 "CAGTGC",
-                "TTATGT",
+                "TTCTGT",
                 "AGAAGG",
                 "GCCCTA",
                 "TCACTG"
@@ -242,9 +240,8 @@ public class MutantDetectorTest {
     }
 
     @Test
-    @DisplayName("Mutante horizontal - cumple patrón requerido")
+    @DisplayName("Mutante horizontal")
     public void testHorizontalMutant() {
-        // Dos secuencias horizontales para cumplir patrón test.*[Hh]orizontal.*[Mm]utant
         assertTrue(detector.isMutant(new String[] {
                 "AAAAAA",
                 "CAGTGC",
@@ -256,18 +253,208 @@ public class MutantDetectorTest {
     }
 
     @Test
-    @DisplayName("Mutante diagonal - cumple patrón requerido")
+    @DisplayName("Mutante diagona")
     public void testDiagonalMutant() {
         // Dos secuencias diagonales: descendente desde (0,0) AAAA y descendente desde (1,0) GGGG
         assertTrue(detector.isMutant(new String[] {
                 "ATGCGA",
                 "GAGTGC",
-                "TGGTGT",
-                "AGGGGG",
+                "GGATGT",
+                "AGTAGG",
                 "CCGCTA",
-                "TCACTG"
+                "TCAGTG"
         }));
     }
+
+    // ==================== TESTS DE PERFORMANCE (RÚBRICAS 1.2) ====================
+
+    /**
+     * Genera una matriz de ADN de tamaño NxN con caracteres aleatorios válidos
+     */
+    private String[] generateDna(int size) {
+        String[] dna = new String[size];
+        char[] bases = {'A', 'T', 'C', 'G'};
+        java.util.Random random = new java.util.Random();
+        
+        for (int i = 0; i < size; i++) {
+            StringBuilder row = new StringBuilder(size);
+            for (int j = 0; j < size; j++) {
+                row.append(bases[random.nextInt(bases.length)]);
+            }
+            dna[i] = row.toString();
+        }
+        return dna;
+    }
+
+    /**
+     * Genera una matriz de ADN de tamaño NxN que es mutante (para pruebas de performance)
+     */
+    private String[] generateMutantDna(int size) {
+        String[] dna = new String[size];
+        char[] bases = {'A', 'T', 'C', 'G'};
+        java.util.Random random = new java.util.Random();
+        
+        // Primera fila: secuencia horizontal de AAAA
+        StringBuilder firstRow = new StringBuilder(size);
+        firstRow.append("AAAA");
+        for (int j = 4; j < size; j++) {
+            firstRow.append(bases[random.nextInt(bases.length)]);
+        }
+        dna[0] = firstRow.toString();
+        
+        // Segunda fila: diagonal desde (0,0) con AAAA
+        StringBuilder secondRow = new StringBuilder(size);
+        secondRow.append("A");
+        for (int j = 1; j < size && j < 4; j++) {
+            secondRow.append("A");
+        }
+        for (int j = 4; j < size; j++) {
+            secondRow.append(bases[random.nextInt(bases.length)]);
+        }
+        if (size > 1) {
+            dna[1] = secondRow.toString();
+        }
+        
+        // Resto de filas aleatorias
+        for (int i = 2; i < size; i++) {
+            StringBuilder row = new StringBuilder(size);
+            for (int j = 0; j < size; j++) {
+                row.append(bases[random.nextInt(bases.length)]);
+            }
+            dna[i] = row.toString();
+        }
+        
+        return dna;
+    }
+
+    @Test
+    @DisplayName("Performance: Matriz 6x6 debe ser ≤ 5ms")
+    public void testPerformance_6x6() {
+        // Arrange - Generar matriz FUERA de la medición
+        String[] dna = generateDna(6);
+        
+        // Warmup - Ejecutar una vez para calentar la JVM
+        detector.isMutant(dna);
+        
+        // Act - Medir SOLO el tiempo de isMutant() con múltiples ejecuciones
+        int iterations = 1000; // Múltiples ejecuciones para mayor precisión
+        long totalNanos = 0;
+        
+        for (int i = 0; i < iterations; i++) {
+            long start = System.nanoTime();
+            detector.isMutant(dna);
+            long end = System.nanoTime();
+            totalNanos += (end - start);
+        }
+        
+        // Calcular promedio
+        long avgNanos = totalNanos / iterations;
+        double avgMs = avgNanos / 1_000_000.0;
+        
+        // Assert
+        assertTrue(avgMs <= 5, 
+            "6x6 debe ser ≤ 5ms (aceptable), promedio fue: " + String.format("%.3f", avgMs) + "ms");
+        
+        // Información adicional con mayor precisión
+        System.out.println("Performance 6x6: " + String.format("%.3f", avgMs) + "ms (promedio de " + iterations + " ejecuciones, límite: 5ms)");
+    }
+
+    @Test
+    @DisplayName("Performance: Matriz 100x100 debe ser ≤ 100ms")
+    public void testPerformance_100x100() {
+        // Arrange - Generar matriz FUERA de la medición
+        String[] dna = generateDna(100);
+        
+        // Warmup - Ejecutar una vez para calentar la JVM
+        detector.isMutant(dna);
+        
+        // Act - Medir SOLO el tiempo de isMutant() con múltiples ejecuciones
+        int iterations = 100; // Menos iteraciones para matrices grandes
+        long totalNanos = 0;
+        
+        for (int i = 0; i < iterations; i++) {
+            long start = System.nanoTime();
+            detector.isMutant(dna);
+            long end = System.nanoTime();
+            totalNanos += (end - start);
+        }
+        
+        // Calcular promedio
+        long avgNanos = totalNanos / iterations;
+        double avgMs = avgNanos / 1_000_000.0;
+        
+        // Assert
+        assertTrue(avgMs <= 100, 
+            "100x100 debe ser ≤ 100ms (aceptable), promedio fue: " + String.format("%.3f", avgMs) + "ms");
+        
+        // Información adicional con mayor precisión
+        System.out.println("Performance 100x100: " + String.format("%.3f", avgMs) + "ms (promedio de " + iterations + " ejecuciones, límite: 100ms)");
+    }
+
+    @Test
+    @DisplayName("Performance: Matriz 1000x1000 debe ser ≤ 5000ms")
+    public void testPerformance_1000x1000() {
+        // Arrange - Generar matriz FUERA de la medición
+        String[] dna = generateDna(1000);
+        
+        // Warmup - Ejecutar una vez para calentar la JVM
+        detector.isMutant(dna);
+        
+        // Act - Medir SOLO el tiempo de isMutant() con múltiples ejecuciones
+        int iterations = 10; // Pocas iteraciones para matrices muy grandes
+        long totalNanos = 0;
+        
+        for (int i = 0; i < iterations; i++) {
+            long start = System.nanoTime();
+            detector.isMutant(dna);
+            long end = System.nanoTime();
+            totalNanos += (end - start);
+        }
+        
+        // Calcular promedio
+        long avgNanos = totalNanos / iterations;
+        double avgMs = avgNanos / 1_000_000.0;
+        
+        // Assert
+        assertTrue(avgMs <= 5000, 
+            "1000x1000 debe ser ≤ 5000ms (aceptable), promedio fue: " + String.format("%.3f", avgMs) + "ms");
+        
+        // Información adicional con mayor precisión
+        System.out.println("Performance 1000x1000: " + String.format("%.3f", avgMs) + "ms (promedio de " + iterations + " ejecuciones, límite: 5000ms)");
+    }
+
+    @Test
+    @DisplayName("Performance: Matriz 6x6 con early termination debe ser rápido")
+    public void testPerformance_6x6_WithEarlyTermination() {
+        // Arrange - Matriz mutante (encuentra 2 secuencias rápido) FUERA de la medición
+        String[] dna = generateMutantDna(6);
+        
+        // Warmup - Ejecutar una vez para calentar la JVM
+        boolean warmupResult = detector.isMutant(dna);
+        assertTrue(warmupResult, "Debe ser mutante");
+        
+        // Act - Medir SOLO el tiempo de isMutant() con múltiples ejecuciones
+        int iterations = 1000;
+        long totalNanos = 0;
+        
+        for (int i = 0; i < iterations; i++) {
+            long start = System.nanoTime();
+            detector.isMutant(dna);
+            long end = System.nanoTime();
+            totalNanos += (end - start);
+        }
+        
+        // Calcular promedio
+        long avgNanos = totalNanos / iterations;
+        double avgMs = avgNanos / 1_000_000.0;
+        
+        // Assert
+        assertTrue(avgMs <= 5, 
+            "6x6 con early termination debe ser ≤ 5ms, promedio fue: " + String.format("%.3f", avgMs) + "ms");
+        
+        System.out.println("Performance 6x6 (early termination): " + String.format("%.3f", avgMs) + "ms (promedio de " + iterations + " ejecuciones)");
+    }
+
 }
 
 

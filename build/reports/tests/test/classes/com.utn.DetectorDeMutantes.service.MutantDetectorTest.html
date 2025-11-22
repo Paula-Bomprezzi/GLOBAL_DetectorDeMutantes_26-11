@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">19</div>
+<div class="counter">4</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.034s</div>
+<div class="counter">0.229s</div>
 <p>duration</p>
 </div>
 </td>
@@ -63,6 +63,9 @@
 <li>
 <a href="#">Tests</a>
 </li>
+<li>
+<a href="#">Standard output</a>
+</li>
 </ul>
 <div class="tab">
 <h2>Tests</h2>
@@ -76,120 +79,40 @@
 </tr>
 </thead>
 <tr>
-<td class="success">Mutante diagonal - cumple patrón requerido</td>
-<td class="success">testDiagonalMutant()</td>
-<td class="success">0s</td>
+<td class="success">Performance: Matriz 1000x1000 debe ser ≤ 5000ms</td>
+<td class="success">testPerformance_1000x1000()</td>
+<td class="success">0.145s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">Mutante horizontal - cumple patrón requerido</td>
-<td class="success">testHorizontalMutant()</td>
-<td class="success">0.002s</td>
+<td class="success">Performance: Matriz 100x100 debe ser ≤ 100ms</td>
+<td class="success">testPerformance_100x100()</td>
+<td class="success">0.077s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">Mutante con todos los caracteres iguales</td>
-<td class="success">testMutantAllSameCharacter()</td>
-<td class="success">0.001s</td>
+<td class="success">Performance: Matriz 6x6 debe ser ≤ 5ms</td>
+<td class="success">testPerformance_6x6()</td>
+<td class="success">0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">Mutante con diagonal en esquina</td>
-<td class="success">testMutantDiagonalInCorner()</td>
-<td class="success">0.015s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Mutante con diagonales ascendentes y descendentes</td>
-<td class="success">testMutantWithBothDiagonals()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Mutante con secuencia horizontal y diagonal</td>
-<td class="success">testMutantWithHorizontalAndDiagonalSequences()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Mutante con matriz grande 10x10</td>
-<td class="success">testMutantWithLargeDna()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Mutante con múltiples secuencias horizontales</td>
-<td class="success">testMutantWithMultipleHorizontalSequences()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Mutante con secuencias verticales</td>
-<td class="success">testMutantWithVerticalSequences()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Humano con matriz pequeña 4x4 sin secuencias</td>
-<td class="success">testNotMutantSmallDna()</td>
+<td class="success">Performance: Matriz 6x6 con early termination debe ser rápido</td>
+<td class="success">testPerformance_6x6_WithEarlyTermination()</td>
 <td class="success">0.003s</td>
 <td class="success">passed</td>
 </tr>
-<tr>
-<td class="success">Validación: Array vacío</td>
-<td class="success">testNotMutantWithEmptyDna()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Validación: Caracteres inválidos</td>
-<td class="success">testNotMutantWithInvalidCharacters()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Humano sin secuencias</td>
-<td class="success">testNotMutantWithNoSequences()</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Validación: Matriz no cuadrada</td>
-<td class="success">testNotMutantWithNonSquareDna()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Validación: DNA null</td>
-<td class="success">testNotMutantWithNullDna()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Validación: Fila null</td>
-<td class="success">testNotMutantWithNullRow()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Humano con solo una secuencia</td>
-<td class="success">testNotMutantWithOnlyOneSequence()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Edge case: Secuencia de longitud 5 no debe contar</td>
-<td class="success">testNotMutantWithSequenceLongerThanFour()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Validación: Matriz muy pequeña</td>
-<td class="success">testNotMutantWithTooSmallDna()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
 </table>
+</div>
+<div class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>Performance 100x100: 0,370ms (promedio de 100 ejecuciones, límite: 100ms)
+Performance 6x6: 0,002ms (promedio de 1000 ejecuciones, límite: 5ms)
+Performance 6x6 (early termination): 0,002ms (promedio de 1000 ejecuciones)
+Performance 1000x1000: 11,257ms (promedio de 10 ejecuciones, límite: 5000ms)
+</pre>
+</span>
 </div>
 </div>
 <div id="footer">
@@ -199,7 +122,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 8.14.3</a> at 21 nov 2025 15:26:16</p>
+<a href="https://www.gradle.org">Gradle 8.14.3</a> at 22 nov. 2025 20:11:50</p>
 </div>
 </div>
 </body>

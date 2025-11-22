@@ -13,26 +13,43 @@ public class StatsService {
 
 
     public StatsResponse getStats() {
-<span class="fc" id="L16">        Long m = repo.countByIsMutant(true);</span>
-<span class="fc" id="L17">        Long nm =repo.countByIsMutant(false);</span>
-<span class="fc bfc" id="L18" title="All 2 branches covered.">        if(nm==0){</span>
-<span class="fc" id="L19">            return StatsResponse.builder()</span>
-<span class="fc" id="L20">                    .countMutantDna(m)</span>
-<span class="fc" id="L21">                    .build();</span>
-        }else {
-<span class="fc" id="L23">            System.out.println(&quot;=====================================STATS=====================================&quot;);</span>
-<span class="fc" id="L24">            System.out.println(&quot; Contamos con un total de&quot; + m + &quot; mutantes en el sistema&quot;);</span>
-<span class="fc" id="L25">            System.out.println(&quot; Contamos con un total de&quot; + nm + &quot; humanos en el sistema&quot;);</span>
-<span class="fc" id="L26">            double ratio = (double) m/nm;</span>
-<span class="fc" id="L27">            System.out.println(&quot; El porcentaje de mutantes sobre humanos es de &quot; + ratio + &quot;%&quot;);</span>
-<span class="fc" id="L28">            return  StatsResponse.builder()</span>
-<span class="fc" id="L29">                    .countHumanDna(nm)</span>
-<span class="fc" id="L30">                    .countMutantDna(m)</span>
-<span class="fc" id="L31">                    .ratio(ratio)</span>
-<span class="fc" id="L32">                    .build();</span>
+<span class="nc" id="L16">        Long m = repo.countByIsMutant(true);</span>
+<span class="nc" id="L17">        Long nm = repo.countByIsMutant(false);</span>
+        
+        // Caso especial: No hay datos en el sistema
+<span class="nc bnc" id="L20" title="All 4 branches missed.">        if (m == 0 &amp;&amp; nm == 0) {</span>
+<span class="nc" id="L21">            System.out.println(&quot;=====================================STATS=====================================&quot;);</span>
+<span class="nc" id="L22">            System.out.println(&quot;No hay datos en el sistema aÃºn.&quot;);</span>
+<span class="nc" id="L23">            return StatsResponse.builder()</span>
+<span class="nc" id="L24">                    .countMutantDna(0)</span>
+<span class="nc" id="L25">                    .countHumanDna(0)</span>
+<span class="nc" id="L26">                    .ratio(0.0)</span>
+<span class="nc" id="L27">                    .build();</span>
         }
-
-    };
+        
+        // Caso: Solo hay mutantes (sin humanos)
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (nm == 0) {</span>
+<span class="nc" id="L32">            System.out.println(&quot;=====================================STATS=====================================&quot;);</span>
+<span class="nc" id="L33">            System.out.println(&quot;Solo hay mutantes en el sistema!, hay &quot; + m + &quot; para ser exactos.&quot;);</span>
+<span class="nc" id="L34">            return StatsResponse.builder()</span>
+<span class="nc" id="L35">                    .countMutantDna(m)</span>
+<span class="nc" id="L36">                    .countHumanDna(0)</span>
+<span class="nc" id="L37">                    .ratio(0.0)</span>
+<span class="nc" id="L38">                    .build();</span>
+        }
+        
+        // Caso normal: Hay mutantes y humanos
+<span class="nc" id="L42">        System.out.println(&quot;=====================================STATS=====================================&quot;);</span>
+<span class="nc" id="L43">        System.out.println(&quot; Contamos con un total de &quot; + m + &quot; mutantes en el sistema&quot;);</span>
+<span class="nc" id="L44">        System.out.println(&quot; Contamos con un total de &quot; + nm + &quot; humanos en el sistema&quot;);</span>
+<span class="nc" id="L45">        double ratio = (double) m / nm;</span>
+<span class="nc" id="L46">        System.out.println(&quot; El porcentaje de mutantes sobre humanos es de &quot; + ratio + &quot;%&quot;);</span>
+<span class="nc" id="L47">        return StatsResponse.builder()</span>
+<span class="nc" id="L48">                .countHumanDna(nm)</span>
+<span class="nc" id="L49">                .countMutantDna(m)</span>
+<span class="nc" id="L50">                .ratio(ratio)</span>
+<span class="nc" id="L51">                .build();</span>
+    }
 }
 
 

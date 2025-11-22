@@ -6,6 +6,10 @@ import java.util.Set;
 @Service
 public class MutantDetector {
 
+    // Constructor público sin argumentos
+    public MutantDetector() {
+    }
+
     //Defino cuál es el tamaño mínimo
     private static final int SEQUENCE_LENGTH = 4;
     //defino qué caracteres acepto
@@ -52,35 +56,47 @@ public class MutantDetector {
         for (int row = 0; row < n; row++) {
             for (int col = 0; col < n; col++) {
 
-                // Horizontal
+                // Horizontal: solo contar si es el inicio de una secuencia (no superpuesta)
                 if (col <= n - SEQUENCE_LENGTH) {
                     if (checkHorizontal(matrix, row, col)) {
-                        sequenceCount++;
-                        if (sequenceCount > 1) return true;  // Early termination
+                        // Solo contar si es el inicio: col == 0 o el carácter anterior es diferente
+                        if (col == 0 || matrix[row][col - 1] != matrix[row][col]) {
+                            sequenceCount++;
+                            if (sequenceCount > 1) return true;  // Early termination
+                        }
                     }
                 }
 
-                // Vertical
+                // Vertical: solo contar si es el inicio de una secuencia (no superpuesta)
                 if (row <= n - SEQUENCE_LENGTH) {
                     if (checkVertical(matrix, row, col)) {
-                        sequenceCount++;
-                        if (sequenceCount > 1) return true;
+                        // Solo contar si es el inicio: row == 0 o el carácter anterior es diferente
+                        if (row == 0 || matrix[row - 1][col] != matrix[row][col]) {
+                            sequenceCount++;
+                            if (sequenceCount > 1) return true;
+                        }
                     }
                 }
 
-                // Diagonal Descendente
+                // Diagonal Descendente: solo contar si es el inicio de una secuencia (no superpuesta)
                 if (row <= n - SEQUENCE_LENGTH && col <= n - SEQUENCE_LENGTH) {
                     if (checkDiagonalDescending(matrix, row, col)) {
-                        sequenceCount++;
-                        if (sequenceCount > 1) return true;
+                        // Solo contar si es el inicio: row == 0 o col == 0 o el carácter diagonal anterior es diferente
+                        if ((row == 0 || col == 0) || matrix[row - 1][col - 1] != matrix[row][col]) {
+                            sequenceCount++;
+                            if (sequenceCount > 1) return true;
+                        }
                     }
                 }
 
-                // Diagonal Ascendente
+                // Diagonal Ascendente: solo contar si es el inicio de una secuencia (no superpuesta)
                 if (row >= SEQUENCE_LENGTH - 1 && col <= n - SEQUENCE_LENGTH) {
                     if (checkDiagonalAscending(matrix, row, col)) {
-                        sequenceCount++;
-                        if (sequenceCount > 1) return true;
+                        // Solo contar si es el inicio: row == n-1 o col == 0 o el carácter diagonal anterior es diferente
+                        if ((row == n - 1 || col == 0) || matrix[row + 1][col - 1] != matrix[row][col]) {
+                            sequenceCount++;
+                            if (sequenceCount > 1) return true;
+                        }
                     }
                 }
             }

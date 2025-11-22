@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ErrorResponse {
 
-    @Schema(description = &quot;Fecha y hora en que ocurrió el error&quot;, example = &quot;2025-01-07T15:30:45.123&quot;)
+    @Schema(description = &quot;Fecha y hora en que ocurriÃ³ el error&quot;, example = &quot;2025-01-07T15:30:45.123&quot;)
     private LocalDateTime timestamp;
     
-    @Schema(description = &quot;Código de estado HTTP&quot;, example = &quot;400&quot;)
+    @Schema(description = &quot;CÃ³digo de estado HTTP&quot;, example = &quot;400&quot;)
     private int status;
     
     @Schema(description = &quot;Tipo de error&quot;, example = &quot;Bad Request&quot;)
@@ -25,17 +25,17 @@ public class ErrorResponse {
     @Schema(description = &quot;Mensaje descriptivo del error&quot;, example = &quot;Invalid DNA sequence: must be a square NxN matrix&quot;)
     private String message;
     
-    @Schema(description = &quot;Ruta del endpoint donde ocurrió el error&quot;, example = &quot;/mutant&quot;)
+    @Schema(description = &quot;Ruta del endpoint donde ocurriÃ³ el error&quot;, example = &quot;/mutant&quot;)
     private String path;
 
-    // Constructor para facilitar la creación
-<span class="fc" id="L32">    public ErrorResponse(int status, String error, String message, String path) {</span>
-<span class="fc" id="L33">        this.timestamp = LocalDateTime.now();</span>
-<span class="fc" id="L34">        this.status = status;</span>
-<span class="fc" id="L35">        this.error = error;</span>
-<span class="fc" id="L36">        this.message = message;</span>
-<span class="fc" id="L37">        this.path = path;</span>
-<span class="fc" id="L38">    }</span>
+    // Constructor para facilitar la creaciÃ³n
+<span class="nc" id="L32">    public ErrorResponse(int status, String error, String message, String path) {</span>
+<span class="nc" id="L33">        this.timestamp = LocalDateTime.now();</span>
+<span class="nc" id="L34">        this.status = status;</span>
+<span class="nc" id="L35">        this.error = error;</span>
+<span class="nc" id="L36">        this.message = message;</span>
+<span class="nc" id="L37">        this.path = path;</span>
+<span class="nc" id="L38">    }</span>
 }
 
 

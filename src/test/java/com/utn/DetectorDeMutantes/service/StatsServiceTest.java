@@ -22,14 +22,10 @@ class StatsServiceTest {
     @InjectMocks
     private StatsService statsService;
 
-    @BeforeEach
-    void setUp() {
-        // Setup común si es necesario
-    }
 
     @Test
     @DisplayName("Ratio normal - mutantes/humanos")
-    void testGetStats_NormalRatio_ShouldCalculateCorrectly() {
+    void testNormalRatio_ShouldCalculateCorrectly() {
         // Arrange
         long countMutants = 40L;
         long countHumans = 100L;
@@ -52,7 +48,7 @@ class StatsServiceTest {
 
     @Test
     @DisplayName("Sin humanos - caso especial")
-    void testGetStats_NoHumans_ShouldReturnOnlyMutants() {
+    void testNoHumans_ShouldReturnOnlyMutants() {
         // Arrange
         long countMutants = 50L;
         long countHumans = 0L;
@@ -74,7 +70,7 @@ class StatsServiceTest {
 
     @Test
     @DisplayName("Sin mutantes")
-    void testGetStats_NoMutants_ShouldReturnZeroRatio() {
+    void testNoMutants_ShouldReturnZeroRatio() {
         // Arrange
         long countMutants = 0L;
         long countHumans = 100L;
@@ -97,7 +93,7 @@ class StatsServiceTest {
 
     @Test
     @DisplayName("Sin registros")
-    void testGetStats_NoRecords_ShouldReturnZeros() {
+    void testNoRecords_ShouldReturnZerosWithMessage() {
         // Arrange
         long countMutants = 0L;
         long countHumans = 0L;
@@ -112,14 +108,14 @@ class StatsServiceTest {
         assertNotNull(result);
         assertEquals(0, result.getCountMutantDna());
         assertEquals(0, result.getCountHumanDna());
-        // Cuando no hay humanos, no se establece ratio
+        assertEquals(0.0, result.getRatio(), 0.001);
         verify(repository, times(1)).countByIsMutant(true);
         verify(repository, times(1)).countByIsMutant(false);
     }
 
     @Test
     @DisplayName("Verificar cálculo correcto del ratio")
-    void testGetStats_RatioCalculation_ShouldBeCorrect() {
+    void testRatioCalculation_ShouldBeCorrect() {
         // Arrange - Caso con ratio > 1
         long countMutants = 150L;
         long countHumans = 100L;
@@ -138,7 +134,7 @@ class StatsServiceTest {
 
     @Test
     @DisplayName("Ratio con valores grandes")
-    void testGetStats_LargeValues_ShouldCalculateCorrectly() {
+    void testRatioWithLargeValues_ShouldCalculateCorrectly() {
         // Arrange
         long countMutants = 1000L;
         long countHumans = 5000L;

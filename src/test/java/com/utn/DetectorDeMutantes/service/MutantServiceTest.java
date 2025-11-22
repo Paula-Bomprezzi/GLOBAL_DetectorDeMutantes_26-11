@@ -46,13 +46,14 @@ class MutantServiceTest {
 
         // Hash SHA-256 del DNA mutante concatenado
         expectedHash = "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1f2";
+
     }
 
     @Test
     @DisplayName("DNA nuevo - debe calcular hash, analizar y guardar")
-    void testAnalyzeDna_NewDna_ShouldCalculateHashAnalyzeAndSave() {
+    void testNewDna_ShouldCalculateHashAnalyzeAndSave() {
         // Arrange
-        when(repository.findByDnaHash(anyString())).thenReturn(Optional.empty());
+        when(repository.findByDnaHash(anyString())).thenReturn(Optional.empty()); //Acá el método me va a calcular el hash, pero lo ignoro
         when(mutantDetector.isMutant(mutantDna)).thenReturn(true);
         when(repository.save(any(DnaRecord.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
@@ -68,7 +69,7 @@ class MutantServiceTest {
 
     @Test
     @DisplayName("DNA existente - debe retornar cacheado sin analizar")
-    void testAnalyzeDna_ExistingDna_ShouldReturnCached() {
+    void testExistingDna_ShouldReturnCached() {
         // Arrange
         DnaRecord existingRecord = DnaRecord.builder()
                 .id(1L)
@@ -91,7 +92,7 @@ class MutantServiceTest {
 
     @Test
     @DisplayName("Verificar que se guarda en BD con createdAt")
-    void testAnalyzeDna_NewDna_ShouldSaveWithCreatedAt() {
+    void testNewDna_ShouldSaveWithCreatedAt() {
         // Arrange
         when(repository.findByDnaHash(anyString())).thenReturn(Optional.empty());
         when(mutantDetector.isMutant(mutantDna)).thenReturn(false);
@@ -111,7 +112,7 @@ class MutantServiceTest {
 
     @Test
     @DisplayName("Verificar que el hash se calcula correctamente")
-    void testAnalyzeDna_NewDna_ShouldCalculateHashCorrectly() {
+    void testNewDna_ShouldCalculateHashCorrectly() {
         // Arrange
         when(repository.findByDnaHash(anyString())).thenReturn(Optional.empty());
         when(mutantDetector.isMutant(mutantDna)).thenReturn(true);
@@ -129,7 +130,7 @@ class MutantServiceTest {
 
     @Test
     @DisplayName("Manejo de excepciones - verificar que el servicio funciona correctamente")
-    void testAnalyzeDna_ShouldHandleExceptionsCorrectly() {
+    void testExceptionHandling_ShouldWorkCorrectly() {
         // Arrange
         // La excepción DnaHashCalculationException solo se lanzaría si SHA-256 no está disponible
         // lo cual es muy improbable. Este test verifica que el flujo normal funciona.
