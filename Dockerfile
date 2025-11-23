@@ -3,8 +3,9 @@
 # ========================================
 # Imagen base con JDK completo para compilar el código
 # Eclipse Temurin JDK incluye todas las herramientas necesarias
+# Java 21 coincide con la configuración en build.gradle
 # Se usa "AS build" para nombrar esta etapa y referenciarla después
-FROM eclipse-temurin:17-jdk-alpine AS build
+FROM eclipse-temurin:21-jdk-alpine AS build
 
 # Copiar TODO el código fuente del proyecto al contenedor
 # Primer '.' = origen (directorio actual del host)
@@ -26,8 +27,9 @@ RUN ./gradlew bootJar --no-daemon
 # ========================================
 # Imagen base con SOLO el runtime de Java (sin herramientas de compilación)
 # Eclipse Temurin es el sucesor oficial de OpenJDK (recomendado por Adoptium)
+# Java 21 coincide con la versión de compilación
 # Esto reduce el tamaño de la imagen final de ~500MB a ~200MB
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 
 # Documentar que la aplicación escucha en el puerto 8080
 # IMPORTANTE: esto NO abre el puerto, solo es documentación
