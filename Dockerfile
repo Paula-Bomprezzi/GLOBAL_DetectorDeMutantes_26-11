@@ -1,16 +1,10 @@
 # ========================================
 # ETAPA 1: BUILD (Compilación)
 # ========================================
-# Imagen base ligera de Alpine Linux (~5MB) para compilar el código
+# Imagen base con JDK completo para compilar el código
+# Eclipse Temurin JDK incluye todas las herramientas necesarias
 # Se usa "AS build" para nombrar esta etapa y referenciarla después
-FROM alpine:latest AS build
-
-# Actualizar el índice de paquetes de Alpine
-RUN apk update
-
-# Instalar OpenJDK 17 necesario para compilar código Java/Spring Boot
-# Alpine usa 'apk' como gestor de paquetes (equivalente a apt/yum)
-RUN apk add openjdk17
+FROM eclipse-temurin:17-jdk-alpine AS build
 
 # Copiar TODO el código fuente del proyecto al contenedor
 # Primer '.' = origen (directorio actual del host)

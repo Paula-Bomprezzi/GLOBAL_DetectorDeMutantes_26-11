@@ -5,6 +5,8 @@
 
 API REST desarrollada con Spring Boot para detectar si una secuencia de ADN pertenece a un mutante. Un humano es mutante si tiene más de una secuencia de 4 letras iguales consecutivas en horizontal, vertical o diagonal.
 
+## La aplicación se encuentra hosteada en: https://global-detectordemutantes-26-11-1.onrender.com
+
 ## Tecnologías Utilizadas
 
 - **Java 21** - Lenguaje de programación
