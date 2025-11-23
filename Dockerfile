@@ -2,8 +2,8 @@
 # ETAPA 1: BUILD (Compilación)
 # ========================================
 # Imagen base ligera de Alpine Linux (~5MB) para compilar el código
-# Se usa "as build" para nombrar esta etapa y referenciarla después
-FROM alpine:latest as build
+# Se usa "AS build" para nombrar esta etapa y referenciarla después
+FROM alpine:latest AS build
 
 # Actualizar el índice de paquetes de Alpine
 RUN apk update
@@ -31,8 +31,9 @@ RUN ./gradlew bootJar --no-daemon
 # ETAPA 2: RUNTIME (Ejecución)
 # ========================================
 # Imagen base con SOLO el runtime de Java (sin herramientas de compilación)
+# Eclipse Temurin es el sucesor oficial de OpenJDK (recomendado por Adoptium)
 # Esto reduce el tamaño de la imagen final de ~500MB a ~200MB
-FROM openjdk:17-alpine
+FROM eclipse-temurin:17-jre-alpine
 
 # Documentar que la aplicación escucha en el puerto 8080
 # IMPORTANTE: esto NO abre el puerto, solo es documentación
