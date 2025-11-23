@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.312s</div>
+<div class="counter">0.281s</div>
 <p>duration</p>
 </div>
 </td>
@@ -81,31 +81,31 @@
 <tr>
 <td class="success">Manejo de excepciones - verificar que el servicio funciona correctamente</td>
 <td class="success">testExceptionHandling_ShouldWorkCorrectly()</td>
-<td class="success">0.007s</td>
+<td class="success">0.005s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">DNA existente - debe retornar cacheado sin analizar</td>
 <td class="success">testExistingDna_ShouldReturnCached()</td>
-<td class="success">0.005s</td>
+<td class="success">0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">DNA nuevo - debe calcular hash, analizar y guardar</td>
 <td class="success">testNewDna_ShouldCalculateHashAnalyzeAndSave()</td>
-<td class="success">0.289s</td>
+<td class="success">0.264s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Verificar que el hash se calcula correctamente</td>
 <td class="success">testNewDna_ShouldCalculateHashCorrectly()</td>
-<td class="success">0.006s</td>
+<td class="success">0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Verificar que se guarda en BD con createdAt</td>
 <td class="success">testNewDna_ShouldSaveWithCreatedAt()</td>
-<td class="success">0.005s</td>
+<td class="success">0.004s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -113,21 +113,21 @@
 <div class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2025-11-22T21:45:44.700-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : =========================RESULTADOS=========================
-2025-11-22T21:45:44.700-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : El ADN ingresado dice que el sujeto...
-2025-11-22T21:45:44.700-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : ES MUTANTE!!
-2025-11-22T21:45:44.726-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : =========================RESULTADOS=========================
-2025-11-22T21:45:44.726-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : El ADN ingresado dice que el sujeto...
-2025-11-22T21:45:44.726-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : ES MUTANTE!!
-2025-11-22T21:45:44.732-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : =========================RESULTADOS=========================
-2025-11-22T21:45:44.733-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : El ADN ingresado dice que el sujeto...
-2025-11-22T21:45:44.733-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : ES MUTANTE!!
-2025-11-22T21:45:44.738-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : =========================RESULTADOS=========================
-2025-11-22T21:45:44.738-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : El ADN ingresado dice que el sujeto...
-2025-11-22T21:45:44.739-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : No es mutante
-2025-11-22T21:45:44.742-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : =========================RESULTADOS=========================
-2025-11-22T21:45:44.742-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : El ADN ingresado dice que el sujeto...
-2025-11-22T21:45:44.742-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : ES MUTANTE!!
+<pre>2025-11-22T22:14:42.127-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : =========================RESULTADOS=========================
+2025-11-22T22:14:42.127-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : El ADN ingresado dice que el sujeto...
+2025-11-22T22:14:42.127-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : ES MUTANTE!!
+2025-11-22T22:14:42.144-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : =========================RESULTADOS=========================
+2025-11-22T22:14:42.144-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : El ADN ingresado dice que el sujeto...
+2025-11-22T22:14:42.144-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : ES MUTANTE!!
+2025-11-22T22:14:42.149-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : =========================RESULTADOS=========================
+2025-11-22T22:14:42.149-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : El ADN ingresado dice que el sujeto...
+2025-11-22T22:14:42.149-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : ES MUTANTE!!
+2025-11-22T22:14:42.153-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : =========================RESULTADOS=========================
+2025-11-22T22:14:42.154-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : El ADN ingresado dice que el sujeto...
+2025-11-22T22:14:42.154-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : No es mutante
+2025-11-22T22:14:42.157-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : =========================RESULTADOS=========================
+2025-11-22T22:14:42.157-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : El ADN ingresado dice que el sujeto...
+2025-11-22T22:14:42.157-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.MutantService              : ES MUTANTE!!
 </pre>
 </span>
 </div>
@@ -139,7 +139,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 8.14.3</a> at 22 nov. 2025 21:45:45</p>
+<a href="https://www.gradle.org">Gradle 8.14.3</a> at 22 nov. 2025 22:14:42</p>
 </div>
 </div>
 </body>

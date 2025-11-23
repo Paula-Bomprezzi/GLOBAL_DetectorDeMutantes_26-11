@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.763s</div>
+<div class="counter">0.500s</div>
 <p>duration</p>
 </div>
 </td>
@@ -66,6 +66,9 @@
 <li>
 <a href="#">Standard output</a>
 </li>
+<li>
+<a href="#">Standard error</a>
+</li>
 </ul>
 <div class="tab">
 <h2>Tests</h2>
@@ -81,49 +84,49 @@
 <tr>
 <td class="success">GET /stats → 200 OK con JSON correcto</td>
 <td class="success">testGetStats_ShouldReturn200WithCorrectJson()</td>
-<td class="success">0.011s</td>
+<td class="success">0.007s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">GET /stats sin humanos → 200 OK con JSON correcto</td>
 <td class="success">testGetStats_WhenNoHumans_ShouldReturn200WithCorrectJson()</td>
-<td class="success">0.120s</td>
+<td class="success">0.068s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">POST /mutant con DNA vacío → 400 Bad Request</td>
 <td class="success">testPostMutant_WhenDnaIsEmpty_ShouldReturn400()</td>
-<td class="success">0.019s</td>
+<td class="success">0.008s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">POST /mutant con DNA null → 400 Bad Request</td>
 <td class="success">testPostMutant_WhenDnaIsNull_ShouldReturn400()</td>
-<td class="success">0.081s</td>
+<td class="success">0.057s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">POST /mutant con humano → 403 Forbidden</td>
 <td class="success">testPostMutant_WhenHuman_ShouldReturn403()</td>
-<td class="success">0.012s</td>
+<td class="success">0.008s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">POST /mutant con DNA inválido → 400 Bad Request</td>
 <td class="success">testPostMutant_WhenInvalidDna_ShouldReturn400()</td>
-<td class="success">0.008s</td>
+<td class="success">0.006s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">POST /mutant con mutante → 200 OK</td>
 <td class="success">testPostMutant_WhenMutant_ShouldReturn200()</td>
-<td class="success">0.504s</td>
+<td class="success">0.340s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">POST /mutant con matriz no cuadrada → 400 Bad Request</td>
 <td class="success">testPostMutant_WhenNonSquareMatrix_ShouldReturn400()</td>
-<td class="success">0.008s</td>
+<td class="success">0.006s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -131,8 +134,8 @@
 <div class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2025-11-22T21:45:41.477-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.utn.DetectorDeMutantes.controller.MutantControllerTest]: MutantControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-11-22T21:45:41.499-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.utn.DetectorDeMutantes.DetectorDeMutantesApplication for test class com.utn.DetectorDeMutantes.controller.MutantControllerTest
+<pre>22:14:32.160 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.utn.DetectorDeMutantes.controller.MutantControllerTest]: MutantControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:14:32.438 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.utn.DetectorDeMutantes.DetectorDeMutantesApplication for test class com.utn.DetectorDeMutantes.controller.MutantControllerTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -143,31 +146,32 @@
 
  :: Spring Boot ::                (v3.5.7)
 
-2025-11-22T21:45:41.527-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.controller.MutantControllerTest    : Starting MutantControllerTest using Java 21.0.8 with PID 23128 (started by paula in D:\Desarrollo-de-software\GLOBAL_DetectorDeMutantes_26-11)
-2025-11-22T21:45:41.527-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.controller.MutantControllerTest    : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2025-11-22T21:45:41.731-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-11-22T21:45:41.741-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 1 JPA repository interface.
-2025-11-22T21:45:42.280-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-11-22T21:45:42.288-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-11-22T21:45:42.314-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-11-22T21:45:42.318-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2025-11-22T21:45:42.320-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:mutantesdb user=SA
-2025-11-22T21:45:42.320-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-2025-11-22T21:45:42.322-03:00  WARN 23128 --- [DetectorDeMutantes] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-11-22T21:45:42.323-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+2025-11-22T22:14:33.190-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.controller.MutantControllerTest    : Starting MutantControllerTest using Java 21.0.8 with PID 16560 (started by paula in D:\Desarrollo-de-software\GLOBAL_DetectorDeMutantes_26-11)
+2025-11-22T22:14:33.191-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.controller.MutantControllerTest    : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2025-11-22T22:14:34.248-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-22T22:14:34.326-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 61 ms. Found 1 JPA repository interface.
+2025-11-22T22:14:36.473-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-22T22:14:36.592-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-11-22T22:14:36.669-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-22T22:14:36.941-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-22T22:14:37.006-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-22T22:14:37.501-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mutantesdb user=SA
+2025-11-22T22:14:37.505-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-22T22:14:37.570-03:00  WARN 16560 --- [DetectorDeMutantes] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-22T22:14:37.614-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 2.3.232
 	Autocommit mode: undefined/unknown
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-11-22T21:45:42.380-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-11-22T21:45:42.381-03:00 DEBUG 23128 --- [DetectorDeMutantes] [    Test worker] org.hibernate.SQL                        : 
+2025-11-22T22:14:39.038-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-22T22:14:39.067-03:00 DEBUG 16560 --- [DetectorDeMutantes] [    Test worker] org.hibernate.SQL                        : 
     drop table if exists dna_record cascade 
 Hibernate: 
     drop table if exists dna_record cascade 
-2025-11-22T21:45:42.384-03:00 DEBUG 23128 --- [DetectorDeMutantes] [    Test worker] org.hibernate.SQL                        : 
+2025-11-22T22:14:39.083-03:00 DEBUG 16560 --- [DetectorDeMutantes] [    Test worker] org.hibernate.SQL                        : 
     create table dna_record (
         is_mutant boolean not null,
         created_at timestamp(6),
@@ -183,25 +187,36 @@ Hibernate:
         dna_hash varchar(64) not null unique,
         primary key (id)
     )
-2025-11-22T21:45:42.388-03:00 DEBUG 23128 --- [DetectorDeMutantes] [    Test worker] org.hibernate.SQL                        : 
+2025-11-22T22:14:39.102-03:00 DEBUG 16560 --- [DetectorDeMutantes] [    Test worker] org.hibernate.SQL                        : 
     create index idx_dna_hash 
        on dna_record (dna_hash)
 Hibernate: 
     create index idx_dna_hash 
        on dna_record (dna_hash)
-2025-11-22T21:45:42.388-03:00 DEBUG 23128 --- [DetectorDeMutantes] [    Test worker] org.hibernate.SQL                        : 
+2025-11-22T22:14:39.103-03:00 DEBUG 16560 --- [DetectorDeMutantes] [    Test worker] org.hibernate.SQL                        : 
     create index idx_is_mutant 
        on dna_record (is_mutant)
 Hibernate: 
     create index idx_is_mutant 
        on dna_record (is_mutant)
-2025-11-22T21:45:42.391-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-11-22T21:45:42.577-03:00  WARN 23128 --- [DetectorDeMutantes] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-11-22T21:45:42.953-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:mutantesdb'
-2025-11-22T21:45:43.051-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2025-11-22T21:45:43.052-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-11-22T21:45:43.056-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
-2025-11-22T21:45:43.094-03:00  INFO 23128 --- [DetectorDeMutantes] [    Test worker] c.u.D.controller.MutantControllerTest    : Started MutantControllerTest in 1.593 seconds (process running for 10.842)
+2025-11-22T22:14:39.111-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-22T22:14:39.631-03:00  WARN 16560 --- [DetectorDeMutantes] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-22T22:14:40.806-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:mutantesdb'
+2025-11-22T22:14:40.918-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2025-11-22T22:14:40.919-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-22T22:14:40.921-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2025-11-22T22:14:40.973-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.controller.MutantControllerTest    : Started MutantControllerTest in 8.276 seconds (process running for 10.421)
+</pre>
+</span>
+</div>
+<div class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\paula\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.17.8\f09415827a71be7ed621c7bd02550678f28bc81c\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
 </pre>
 </span>
 </div>
@@ -213,7 +228,7 @@ Hibernate:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 8.14.3</a> at 22 nov. 2025 21:45:45</p>
+<a href="https://www.gradle.org">Gradle 8.14.3</a> at 22 nov. 2025 22:14:42</p>
 </div>
 </div>
 </body>
