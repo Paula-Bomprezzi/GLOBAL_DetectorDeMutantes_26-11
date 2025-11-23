@@ -1,0 +1,80 @@
+@startuml
+skinparam style strictuml
+skinparam lifelineStrategy solid
+title Detección de Mutantes y Estadísticas
+
+actor Cliente
+participant "MutantController\n(/mutant, /stats)" as Controller
+participant "MutantService" as MutantService
+participant "MutantDetector" as Detector
+participant "StatsService" as StatsService
+participant "DnaRecord (Entity)" as Entity
+participant "DnaRecordRepository" as Repo
+database "Base de Datos H2" as DB
+
+== POST /mutant ==
+Cliente -> Controller: POST /mutant {dna}
+activate Controller
+Controller -> MutantService: analyzeDna(dna)
+activate MutantService
+MutantService -> MutantService: calculateDnaHash(dna)
+MutantService -> Repo: findByDnaHash(hash)
+activate Repo
+Repo -> DB: SELECT dna_hash = hash
+DB --> Repo: Optional<DnaRecord>
+Repo --> MutantService: ADN encontrado?
+deactivate Repo
+
+alt ADN ya registrado
+    MutantService --> Controller: CompletableFuture(isMutant)
+else Nuevo ADN
+    MutantService -> Detector: isMutant(dna)
+    activate Detector
+    Detector --> MutantService: boolean isMutant
+    deactivate Detector
+
+    ' Creación de la entity (línea punteada, sin activación)
+    MutantService -> Entity: new DnaRecord(hash, isMutant, timestamp)
+    Entity --> MutantService: DnaRecord creado
+
+    MutantService -> Repo: save(DnaRecord)
+    activate Repo
+    Repo -> DB: INSERT registro
+    DB --> Repo: confirmación
+    Repo --> MutantService: DnaRecord persistido
+    deactivate Repo
+
+    MutantService --> Controller: CompletableFuture(isMutant)
+end
+deactivate MutantService
+Controller -> Cliente: HTTP 200 OK / 403 Forbidden
+deactivate Controller
+
+== GET /stats ==
+Cliente -> Controller: GET /stats
+activate Controller
+Controller -> StatsService: getStats()
+activate StatsService
+
+StatsService -> Repo: countByIsMutant(true)
+activate Repo
+Repo -> DB: SELECT COUNT is_mutant = true
+DB --> Repo: total mutantes
+Repo --> StatsService: m
+deactivate Repo
+
+StatsService -> Repo: countByIsMutant(false)
+activate Repo
+Repo -> DB: SELECT COUNT is_mutant = false
+DB --> Repo: total humanos
+Repo --> StatsService: h
+deactivate Repo
+
+StatsService -> StatsService: ratio = m / h
+StatsService --> Controller: StatsResponse{m,h,ratio}
+deactivate StatsService
+
+Controller --> Cliente: HTTP 200 OK + JSON stats
+deactivate Controller
+
+@enduml

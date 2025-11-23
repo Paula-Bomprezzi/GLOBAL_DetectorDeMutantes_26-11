@@ -1,6 +1,8 @@
 # Detector de Mutantes - API REST
 ## Paula Bomprezzi - 48870
 
+![X-Men Logo](images/X-Men-logo.png)
+
 API REST desarrollada con Spring Boot para detectar si una secuencia de ADN pertenece a un mutante. Un humano es mutante si tiene más de una secuencia de 4 letras iguales consecutivas en horizontal, vertical o diagonal.
 
 ## Tecnologías Utilizadas
@@ -89,6 +91,7 @@ Elimina un registro de ADN por su hash.
 - DTOs para Request/Response
 - Manejo global de excepciones con `@RestControllerAdvice`
 - Validaciones con Bean Validation y validadores custom
+- **Diagrama de secuencias** disponible en `zDIAGRAMA DE SECUENCIA/DiagramadeSecuencia.puml` (PlantUML)
 
 ## Cómo Ejecutar
 

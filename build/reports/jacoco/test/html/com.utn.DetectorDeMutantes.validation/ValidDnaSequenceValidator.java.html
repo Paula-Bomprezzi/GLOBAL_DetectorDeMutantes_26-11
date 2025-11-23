@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValidDnaSequenceValidator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DetectorDeMutantes</a> &gt; <a href="index.source.html" class="el_package">com.utn.DetectorDeMutantes.validation</a> &gt; <span class="el_source">ValidDnaSequenceValidator.java</span></div><h1>ValidDnaSequenceValidator.java</h1><pre class="source lang-java linenums">package com.utn.DetectorDeMutantes.validation;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+
+import java.util.Set;
+
+<span class="fc" id="L8">public class ValidDnaSequenceValidator implements ConstraintValidator&lt;ValidDnaSequence, String[]&gt; {</span>
+<span class="fc" id="L9">    private static final Set&lt;Character&gt; VALID_BASES = Set.of('A', 'T', 'C', 'G');</span>
+    private static final int MIN_SIZE = 4;
+    private static final int MAX_SIZE = 1000;
+
+    @Override
+    public boolean isValid(String[] dna, ConstraintValidatorContext context) {
+        // 1. Validar que dna no sea null o vacÃ­o
+<span class="fc bfc" id="L16" title="All 4 branches covered.">        if (dna == null || dna.length == 0) {</span>
+<span class="fc" id="L17">            return false;</span>
+        }
+
+<span class="fc" id="L20">        final int n = dna.length;</span>
+
+        // 2. Validar tamaÃ±o mÃ­nimo 4x4
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        if (n &lt; MIN_SIZE) {</span>
+<span class="nc" id="L24">            return false;</span>
+        }
+
+        // 3. Validar tamaÃ±o mÃ¡ximo 1000x1000
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        if (n &gt; MAX_SIZE) {</span>
+<span class="nc" id="L29">            return false;</span>
+        }
+
+        // 4. Validar que sea matriz cuadrada NxN y que ninguna fila sea null
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        for (String row : dna) {</span>
+            // Validar que ninguna fila sea null
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">            if (row == null) {</span>
+<span class="nc" id="L36">                return false;</span>
+            }
+            
+            // Validar que todas las filas tengan el mismo largo (matriz cuadrada)
+<span class="fc bfc" id="L40" title="All 2 branches covered.">            if (row.length() != n) {</span>
+<span class="fc" id="L41">                return false;</span>
+            }
+        }
+
+        // 5. Validar que solo contenga caracteres A, T, C, G (usando Set para O(1))
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        for (String row : dna) {</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">            for (char c : row.toCharArray()) {</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">                if (!VALID_BASES.contains(c)) {</span>
+<span class="fc" id="L49">                    return false;</span>
+                }
+            }
+        }
+
+        // Todas las validaciones pasaron
+<span class="fc" id="L55">        return true;</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

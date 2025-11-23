@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MutantController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DetectorDeMutantes</a> &gt; <a href="index.source.html" class="el_package">com.utn.DetectorDeMutantes.controller</a> &gt; <span class="el_source">MutantController.java</span></div><h1>MutantController.java</h1><pre class="source lang-java linenums">package com.utn.DetectorDeMutantes.controller;
+import com.utn.DetectorDeMutantes.dto.DnaRequest;
+import com.utn.DetectorDeMutantes.dto.StatsResponse;
+import com.utn.DetectorDeMutantes.service.MutantService;
+import com.utn.DetectorDeMutantes.service.StatsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RequiredArgsConstructor
+@RestController
+@Tag(name = &quot;Mutant Detector&quot;, description = &quot;API para detectar mutantes analizando secuencias de ADN&quot;)
+public class MutantController {
+
+    //atributo
+    private final StatsService  statsService;
+    private final MutantService mutantService;
+
+
+
+    //PARA EL SWAGGER
+    @Operation(
+            summary = &quot;Verificar si un ADN es mutante&quot;,
+            description = &quot;Recibe una secuencia de ADN y determina si es mutante. &quot; +
+                    &quot;Un humano es mutante si tiene mÃ¡s de una secuencia de 4 letras iguales &quot; +
+                    &quot;en horizontal, vertical o diagonal.&quot;
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = &quot;200&quot;,
+                    description = &quot;Es mutante - El ADN contiene mÃ¡s de una secuencia de 4 letras iguales&quot;
+            ),
+            @ApiResponse(
+                    responseCode = &quot;403&quot;,
+                    description = &quot;No es mutante - El ADN tiene 0 o 1 secuencia de 4 letras iguales&quot;
+            ),
+            @ApiResponse(
+                    responseCode = &quot;400&quot;,
+                    description = &quot;DNA invÃ¡lido - El ADN no cumple con las validaciones (debe ser matriz cuadrada NxN, mÃ­nimo 4x4, solo caracteres A/T/C/G)&quot;
+            )
+    })
+
+//CARGAR UN ADN
+    @PostMapping(&quot;/mutant&quot;)
+    public ResponseEntity&lt;?&gt; checkMutant(@RequestBody @Valid DnaRequest request) throws Exception {
+        // Llamar al servicio para analizar el DNA (async)
+<span class="fc" id="L53">        boolean isMutant = mutantService.analyzeDna(request.getDna()).get();</span>
+        
+        // SegÃºn CONSIGNAS:
+        // - 200 OK si es mutante
+        // - 403 Forbidden si NO es mutante
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (isMutant) {</span>
+<span class="fc" id="L59">            return ResponseEntity.ok().build();  // 200 OK - Es mutante</span>
+        } else {
+<span class="fc" id="L61">            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();  // 403 Forbidden - No es mutante</span>
+        }
+    }
+
+
+    @Operation(
+            summary = &quot;Obtener estadÃ­sticas de ADNs analizados&quot;,
+            description = &quot;Retorna las estadÃ­sticas de todos los ADNs analizados: cantidad de mutantes, humanos y el ratio entre ellos.&quot;
+    )
+    @ApiResponse(
+            responseCode = &quot;200&quot;,
+            description = &quot;EstadÃ­sticas obtenidas correctamente&quot;
+    )
+    @GetMapping(&quot;/stats&quot;)
+    public ResponseEntity&lt;StatsResponse&gt; getStats() {
+<span class="fc" id="L76">        StatsResponse stats = statsService.getStats();</span>
+<span class="fc" id="L77">        return ResponseEntity.ok(stats);</span>
+    }
+
+    @Operation(
+            summary = &quot;Endpoint de salud&quot;,
+            description = &quot;Retorna el estado de la API&quot;
+    )
+    @ApiResponse(
+            responseCode = &quot;200&quot;,
+            description = &quot;API funcionando correctamente&quot;
+    )
+    @GetMapping(&quot;/health&quot;)
+    public ResponseEntity&lt;?&gt; health() {
+<span class="nc" id="L90">        return ResponseEntity.ok().body(</span>
+            new java.util.HashMap&lt;String, Object&gt;() {{
+                put(&quot;status&quot;, &quot;UP&quot;);
+                put(&quot;timestamp&quot;, java.time.Instant.now().toString());
+            }}
+        );
+    }
+
+    @Operation(
+            summary = &quot;Eliminar un registro de ADN por hash&quot;,
+            description = &quot;Elimina un registro de ADN de la base de datos usando su hash SHA-256&quot;
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = &quot;200&quot;,
+                    description = &quot;Registro eliminado correctamente&quot;
+            ),
+            @ApiResponse(
+                    responseCode = &quot;404&quot;,
+                    description = &quot;No se encontrÃ³ el registro con el hash especificado&quot;
+            )
+    })
+    @DeleteMapping(&quot;/mutant/{hash}&quot;)
+    public ResponseEntity&lt;?&gt; deleteByHash(@PathVariable String hash) {
+<span class="nc" id="L114">        return mutantService.deleteByHash(hash);</span>
+    }
+
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

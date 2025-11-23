@@ -24,7 +24,7 @@ RUN chmod +x ./gradlew
 # Ejecutar Gradle para compilar y generar el JAR ejecutable
 # bootJar: tarea de Spring Boot que genera un "fat JAR" con todas las dependencias
 # --no-daemon: no usar proceso Gradle en segundo plano (mejor para Docker)
-# Resultado: build/libs/Mutantes-1.0-SNAPSHOT.jar
+# Resultado: build/libs/DetectorDeMutantes-0.0.1-SNAPSHOT.jar
 RUN ./gradlew bootJar --no-daemon
 
 # ========================================

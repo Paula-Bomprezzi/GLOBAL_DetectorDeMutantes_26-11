@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.utn.DetectorDeMutantes.service.MutantDetectorTest" tests="23" skipped="0" failures="0" errors="0" timestamp="2025-11-23T00:45:43.892Z" hostname="PC-MASTER-RACE" time="0.529">
+  <properties/>
+  <testcase name="Mutante con diagonal en esquina" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.009"/>
+  <testcase name="Mutante con diagonales ascendentes y descendentes" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.001"/>
+  <testcase name="Validación: Matriz no cuadrada" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.002"/>
+  <testcase name="Mutante con matriz grande 10x10" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.001"/>
+  <testcase name="Performance: Matriz 100x100 debe ser ≤ 100ms" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.042"/>
+  <testcase name="Performance: Matriz 6x6 debe ser ≤ 5ms" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.004"/>
+  <testcase name="Performance: Matriz 6x6 con early termination debe ser rápido" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.004"/>
+  <testcase name="Validación: Matriz muy pequeña" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.001"/>
+  <testcase name="Mutante con múltiples secuencias horizontales" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.001"/>
+  <testcase name="Mutante con secuencias verticales" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.001"/>
+  <testcase name="Mutante con secuencia horizontal y diagonal" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.0"/>
+  <testcase name="Performance: Matriz 1000x1000 debe ser ≤ 5000ms" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.446"/>
+  <testcase name="Humano con matriz pequeña 4x4 con una secuencia" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.001"/>
+  <testcase name="Humano con solo una secuencia" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.0"/>
+  <testcase name="Mutante con todos los caracteres iguales" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.0"/>
+  <testcase name="Edge case: Secuencia de longitud 5 no debe contar" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.0"/>
+  <testcase name="Mutante horizontal" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.001"/>
+  <testcase name="Validación: Caracteres inválidos" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.0"/>
+  <testcase name="Humano sin secuencias" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.0"/>
+  <testcase name="Mutante diagona" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.0"/>
+  <testcase name="Validación: DNA null" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.001"/>
+  <testcase name="Validación: Fila null" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.001"/>
+  <testcase name="Validación: Array vacío" classname="com.utn.DetectorDeMutantes.service.MutantDetectorTest" time="0.001"/>
+  <system-out><![CDATA[Performance 100x100: 0,372ms (promedio de 100 ejecuciones, límite: 100ms)
+Performance 6x6: 0,003ms (promedio de 1000 ejecuciones, límite: 5ms)
+Performance 6x6 (early termination): 0,002ms (promedio de 1000 ejecuciones)
+Performance 1000x1000: 32,270ms (promedio de 10 ejecuciones, límite: 5000ms)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
