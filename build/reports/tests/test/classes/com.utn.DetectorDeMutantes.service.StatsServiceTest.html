@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.018s</div>
+<div class="counter">0.028s</div>
 <p>duration</p>
 </div>
 </td>
@@ -81,37 +81,37 @@
 <tr>
 <td class="success">Sin humanos - caso especial</td>
 <td class="success">testNoHumans_ShouldReturnOnlyMutants()</td>
-<td class="success">0.003s</td>
+<td class="success">0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Sin mutantes</td>
 <td class="success">testNoMutants_ShouldReturnZeroRatio()</td>
-<td class="success">0.006s</td>
+<td class="success">0.011s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Sin registros</td>
 <td class="success">testNoRecords_ShouldReturnZerosWithMessage()</td>
-<td class="success">0.002s</td>
+<td class="success">0.003s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Ratio normal - mutantes/humanos</td>
 <td class="success">testNormalRatio_ShouldCalculateCorrectly()</td>
-<td class="success">0.002s</td>
+<td class="success">0.003s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Verificar cálculo correcto del ratio</td>
 <td class="success">testRatioCalculation_ShouldBeCorrect()</td>
-<td class="success">0.002s</td>
+<td class="success">0.003s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Ratio con valores grandes</td>
 <td class="success">testRatioWithLargeValues_ShouldCalculateCorrectly()</td>
-<td class="success">0.003s</td>
+<td class="success">0.004s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -119,26 +119,26 @@
 <div class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2025-11-22T22:14:42.163-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : =====================================STATS=====================================
-2025-11-22T22:14:42.163-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 0 mutantes en el sistema
-2025-11-22T22:14:42.163-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 100 humanos en el sistema
-2025-11-22T22:14:42.163-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  El porcentaje de mutantes sobre humanos es de 0.0%
-2025-11-22T22:14:42.168-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : =====================================STATS=====================================
-2025-11-22T22:14:42.168-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 40 mutantes en el sistema
-2025-11-22T22:14:42.168-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 100 humanos en el sistema
-2025-11-22T22:14:42.169-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  El porcentaje de mutantes sobre humanos es de 0.4%
-2025-11-22T22:14:42.171-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : =====================================STATS=====================================
-2025-11-22T22:14:42.171-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : No hay datos en el sistema aún.
-2025-11-22T22:14:42.174-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : =====================================STATS=====================================
-2025-11-22T22:14:42.175-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 1000 mutantes en el sistema
-2025-11-22T22:14:42.175-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 5000 humanos en el sistema
-2025-11-22T22:14:42.175-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  El porcentaje de mutantes sobre humanos es de 0.2%
-2025-11-22T22:14:42.178-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : =====================================STATS=====================================
-2025-11-22T22:14:42.178-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 150 mutantes en el sistema
-2025-11-22T22:14:42.178-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 100 humanos en el sistema
-2025-11-22T22:14:42.178-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  El porcentaje de mutantes sobre humanos es de 1.5%
-2025-11-22T22:14:42.181-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : =====================================STATS=====================================
-2025-11-22T22:14:42.181-03:00  INFO 16560 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : Solo hay mutantes en el sistema!, hay 50 para ser exactos.
+<pre>2025-11-25T00:06:26.022-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : =====================================STATS=====================================
+2025-11-25T00:06:26.023-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 0 mutantes en el sistema
+2025-11-25T00:06:26.024-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 100 humanos en el sistema
+2025-11-25T00:06:26.025-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  El porcentaje de mutantes sobre humanos es de 0.0%
+2025-11-25T00:06:26.032-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : =====================================STATS=====================================
+2025-11-25T00:06:26.033-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 40 mutantes en el sistema
+2025-11-25T00:06:26.033-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 100 humanos en el sistema
+2025-11-25T00:06:26.033-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  El porcentaje de mutantes sobre humanos es de 0.4%
+2025-11-25T00:06:26.036-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : =====================================STATS=====================================
+2025-11-25T00:06:26.036-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : No hay datos en el sistema aún.
+2025-11-25T00:06:26.039-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : =====================================STATS=====================================
+2025-11-25T00:06:26.039-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 1000 mutantes en el sistema
+2025-11-25T00:06:26.039-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 5000 humanos en el sistema
+2025-11-25T00:06:26.039-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  El porcentaje de mutantes sobre humanos es de 0.2%
+2025-11-25T00:06:26.044-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : =====================================STATS=====================================
+2025-11-25T00:06:26.044-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 150 mutantes en el sistema
+2025-11-25T00:06:26.044-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  Contamos con un total de 100 humanos en el sistema
+2025-11-25T00:06:26.044-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               :  El porcentaje de mutantes sobre humanos es de 1.5%
+2025-11-25T00:06:26.049-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : =====================================STATS=====================================
+2025-11-25T00:06:26.049-03:00  INFO 5212 --- [DetectorDeMutantes] [    Test worker] c.u.D.service.StatsService               : Solo hay mutantes en el sistema!, hay 50 para ser exactos.
 </pre>
 </span>
 </div>
@@ -150,7 +150,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 8.14.3</a> at 22 nov. 2025 22:14:42</p>
+<a href="https://www.gradle.org">Gradle 8.14.3</a> at 25 nov. 2025 00:06:26</p>
 </div>
 </div>
 </body>

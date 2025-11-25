@@ -73,7 +73,7 @@ public class MutantDetector {
 <span class="fc bfc" id="L73" title="All 2 branches covered.">                if (row &lt;= n - SEQUENCE_LENGTH) {</span>
 <span class="fc bfc" id="L74" title="All 2 branches covered.">                    if (checkVertical(matrix, row, col)) {</span>
                         // Solo contar si es el inicio: row == 0 o el carÃ¡cter anterior es diferente
-<span class="pc bpc" id="L76" title="1 of 4 branches missed.">                        if (row == 0 || matrix[row - 1][col] != matrix[row][col]) {</span>
+<span class="pc bpc" id="L76" title="3 of 4 branches missed.">                        if (row == 0 || matrix[row - 1][col] != matrix[row][col]) {</span>
 <span class="fc" id="L77">                            sequenceCount++;</span>
 <span class="fc bfc" id="L78" title="All 2 branches covered.">                            if (sequenceCount &gt; 1) return true;</span>
                         }
@@ -135,7 +135,7 @@ public class MutantDetector {
     // Resto filas para subir, me desplazo a la derecha
     private boolean checkDiagonalAscending(char[][] matrix, int row, int col) {
 <span class="fc" id="L137">        final char base = matrix[row][col];</span>
-<span class="pc bpc" id="L138" title="3 of 6 branches missed.">        return matrix[row - 1][col + 1] == base &amp;&amp;</span>
+<span class="pc bpc" id="L138" title="1 of 6 branches missed.">        return matrix[row - 1][col + 1] == base &amp;&amp;</span>
                 matrix[row - 2][col + 2] == base &amp;&amp;
                 matrix[row - 3][col + 3] == base;
     }
