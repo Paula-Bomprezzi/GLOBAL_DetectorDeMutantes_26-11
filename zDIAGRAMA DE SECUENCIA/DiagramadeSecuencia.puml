@@ -4,7 +4,7 @@ skinparam lifelineStrategy solid
 title Detección de Mutantes y Estadísticas
 
 actor Cliente
-participant "MutantController\n(/mutant, /stats)" as Controller
+participant "MutantController\n(/mutant, /stats, /health, /mutant/{hash})" as Controller
 participant "MutantService" as MutantService
 participant "MutantDetector" as Detector
 participant "StatsService" as StatsService
@@ -75,6 +75,41 @@ StatsService --> Controller: StatsResponse{m,h,ratio}
 deactivate StatsService
 
 Controller --> Cliente: HTTP 200 OK + JSON stats
+deactivate Controller
+
+== GET /health ==
+Cliente -> Controller: GET /health
+activate Controller
+Controller -> Controller: Crear HashMap {status: "UP", timestamp}
+Controller --> Cliente: HTTP 200 OK + JSON {status, timestamp}
+deactivate Controller
+
+== DELETE /mutant/{hash} ==
+Cliente -> Controller: DELETE /mutant/{hash}
+activate Controller
+Controller -> MutantService: deleteByHash(hash)
+activate MutantService
+MutantService -> Repo: findByDnaHash(hash)
+activate Repo
+Repo -> DB: SELECT dna_hash = hash
+DB --> Repo: Optional<DnaRecord>
+Repo --> MutantService: Optional<DnaRecord>
+deactivate Repo
+
+alt Registro encontrado
+    MutantService -> Repo: delete(DnaRecord)
+    activate Repo
+    Repo -> DB: DELETE registro
+    DB --> Repo: confirmación
+    Repo --> MutantService: eliminado
+    deactivate Repo
+    MutantService --> Controller: ResponseEntity.ok()
+    Controller --> Cliente: HTTP 200 OK
+else Registro no encontrado
+    MutantService --> Controller: ResponseEntity.notFound()
+    Controller --> Cliente: HTTP 404 Not Found
+end
+deactivate MutantService
 deactivate Controller
 
 @enduml
