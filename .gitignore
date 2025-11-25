@@ -1,0 +1,24 @@
+# --- Gradle (Lo más importante) ---
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# --- IntelliJ IDEA ---
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# --- VS Code ---
+.vscode/
+
+# --- Eclipse ---
+.classpath
+.project
+.settings/
+bin/
+
+# --- Sistema Operativo ---
+.DS_Store
+Thumbs.db
